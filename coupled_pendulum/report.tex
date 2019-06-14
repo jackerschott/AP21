@@ -1,0 +1,335 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+
+\author{Jona Ackerschott}
+\title{Messprotokoll}
+\subtitle{Versuch 211 $-$ Gekoppelte Pendel}
+\date{\today}
+
+\begin{document}
+  \maketitle
+
+  \tableofcontents
+
+  \section{Einleitung}
+  \subsection{Motivation}
+  In diesem Versuch wird die charakteristischen Frequenzen verschiedener Schwingungsformen zweier, durch eine Feder gekoppelter Pendel gemessen.
+  Die vermessenen Schwingungsformen sind hier die symmetrische, asymmetrische und die Schwebungsschwingung.
+  Die Messung erfolgt zum Einen über die Bestimmung der Periodendauer, sowie über die Vermessung der Peaks im Frequenzspektrum, für verschiedene Kopplungsgrade der Feder.
+  Sowohl die Frequenzen als auch die noch aus diesen Frequenzen bestimmten Kopplungsgrade werden mit der Theorie verglichen.
+
+  \subsection{Messverfahren}
+  Damit alle hier durchgeführten Messungen der Schwingungsfrequenzen am Computer durchgeführt werden können müssen zunächst die momentanen Auslenkungen der Pendel digitalisiert werden.
+  Dies geschieht über einen Hall-Sensor, der mithilfe des Hall-Effekts eine Spannung erzeugt die proportional zum Sinus des Auslenkungswinkels ist.
+  In Zusammenhang eines Analog-Digital-Wandlers wird damit dieser Wert über eine serielle Schnittstelle am Computer eingelesen und dort in die jeweilige Auslenkung umgerechnet.
+
+  Des Weiteren muss die Messung des Auslenkungswinkels geeicht werden, sodass in der Ruhelage ein Winkel von 0$^\circ$ gemessen wird.
+
+  Die eigentliche Messung einer Frequenz der jeweiligen Schwingung kann nun mithilfe des Computers durchgeführt werden.
+  Im verwendeten Messprogramm wird dazu zum Einen die Dauer von mehreren Perioden per Cursor abgelesen und daraus die Periodendauer berechnet, als auch zum Anderen das Frequenzspektrum bestimmt und dort per Gauß-Fit der Wert der jeweiligen Frequenz bestimmt.
+
+  Begonnen wird mit einer Messung der Periodendauern der beiden Pendel ohne Kopplung.
+  Dafür wird nur die erste Messmethode verwendet.
+
+  Anschließend wird eine symmetrische und asymmetrische Schwingung sowie eine Schwebungsschwingungq angeregt und jeweils die Frequenz der Schwingung gemessen.
+  Die Anregung erfolgt zunächst bei der symmetrischen Schwingung, indem beide Pendel ruhend mit gleichem Anfangswinkel losgelassen werden.
+  Bei der asymmetrischen Schwingung erfolgt dies äuqivalent, nur das hier die Anfangswinkel genau entgegengesetzt sein müssen, bzw. ein unterschiedliches Vorzeichen besitzen.
+  Bei der Schwebungsschwingung verharrt das eine Pendel in der Ruhelage, während das andere Pendel ohne Anfangsgeschwindigkeit bei einer gewissen Anfangsauslenkung losgelassen wird.
+  Die eigentliche Messung wird nun für alle Schwingungsformen bei ca. 190, 290 und 390 mm Abstand der Federaufhängung von der Pendelachse durchgeführt.
+  Dies entspricht drei verschiedenen Kopplungsgraden.
+  Dafür werden nun die Frequenz der symmetrischen und asymmetrischen Schwingung mithilfe der oben beschriebenen Verfahren bestimmt, wobei über 10 Perioden gemessen wird.
+  Bei der Schwebungsschwingung müssen dagegegen zwei Frequenzen bestimmt werden, sodass über 10 Perioden und über 5 Perioden der Schwebung gemessen wird und im Frequenzspektrum ein Doppel-Gauß-Fit verwendet wird.
+
+  Zuletzt wird noch die Schwingung zweier induktiv gekoppelter elektrischer Schwingkreise für unterschiedliche Kopplungsgrade (Spulenabstände) qualitativ beobachtet.
+
+  \subsection{Theoretische Grundlagen}
+  Zur Aufstellung der Bewegungsgleichung für das gekoppelte Pendel wird zunächst die Differentialgleichung eines ungekoppelten Pendels betrachtet.
+  Es gilt die Beziehung $L = I \omega$ zwischen Drehimpuls $L$ und Kreisfrequenz $\omega = \dot{\varphi}$ mit Trägheitsmoment $I$, woraus folgt $\Rightarrow M = \dot{L} = I \ddot{\varphi}$, während das Drehmoment $M$ außerdem für kleine Winkel mit dem Direktionsmoment $D$ über $M = -D \varphi$ mit $\varphi$ verknüpft ist.
+  Somit erhält man folgende Bewegungsgleichung für das ungekoppelte Pendel
+  \begin{align}
+    I \ddot{\varphi} = -D \varphi
+    \label{eq_theo_motion_no_coupling}
+  \end{align}
+  Im gekoppelten Fall wirkt nun zwischen den beiden Pendeln ein zusätzliches Drehmoment.
+  Aus der Sicht des ersten Pendels erhält man für kleine Winkel eine Auslenkung der Kopplungsfeder von $\Delta x = l (\varphi_2 - \varphi_1)$, sodass man für dieses Drehmoment $M_1 = D_F \Delta x \, l = D_F l^2 (\varphi_2 - \varphi_1)$ erhält, wobei $D_F$ die Federkonstante der Kopplungsfeder, $l$ der Abstand der Federaufhängung von der Pendelachse und $\varphi_i$ die Auslenkung des jeweiligen Pendels ist.
+  Eine analoge Betrachtung des zweiten Pendels liefert $M_2 = D_F l^2 (\varphi_1 - \varphi_2)$.
+  Dabei erfüllt $D' := D_F l^2$ die Definition des Richtmoments welches die Kopplung induziert.
+  Addiert man dieses zusätzliche Drehmoment nun zur rechten Seite von (\ref{eq_theo_motion_no_coupling}) dazu, so erhält man die beiden Bewegungsgleichungen für das gekoppelte Pendel
+  \begin{align}
+    I \ddot{\varphi_1} = -D \varphi_1 + D' (\varphi_2 - \varphi_1) \nonumber \\
+    I \ddot{\varphi_2} = -D \varphi_2 + D' (\varphi_1 - \varphi_2)
+    \label{eq_theo_motion_coupling}
+  \end{align}
+  Dieses gekoppelte Differentialgleichungssystem lässt sich entkoppeln und lösen, was zu folgenden Funktionen für die Auslenkungen der beiden Pendel führt
+  \begin{align}
+    \varphi_1(t) = \frac{1}{2} (A_1 \cos(\omega_1 t) + B_1 \sin(\omega_1 t) + A_2 \cos(\omega_2 t) + B_2 \sin(\omega_2 t)) \nonumber \\
+    \varphi_2(t) = \frac{1}{2} (A_1 \cos(\omega_1 t) + B_1 \sin(\omega_1 t) - A_2 \cos(\omega_2 t) - B_2 \sin(\omega_2 t))
+    \label{eq_theo_motion_solution}
+  \end{align}
+  Wobei $A_1, A_2, B_1$ und $B_2$ reelle Konstanten sind, während $\omega_1 = \sqrt{\frac{D}{I}}$ und $\omega_2 = \sqrt{\frac{D + 2 D'}{I}}$ ist.
+
+  Nun ergeben sich aus verschiedenen Anfangsbedingungen die drei Spezialfälle der symmetrischen und asymmetrischen Schwingung sowie der Schwebungsschwingung.
+
+  Die symmetrische Schwingung erhält man unter den Bedingungen $\varphi_1(0) = \varphi_2(0) = \varphi_0$ für einen Anfangswinkel $\varphi_0$ und $\dot{\varphi}_1(0) = \dot{\varphi}_2(0) = 0$, womit man Folgendes aus (\ref{eq_theo_motion_solution}) erhält
+  \begin{align}
+    \varphi_1(t) = \varphi_2(t) = \varphi_0 \cos(\omega_1 t)
+    \label{eq_theo_motion_solution_sym}
+  \end{align}
+
+  Die asymmetrische Schwingung erhält man dagegen unter den Bedingungen $\varphi_1(0) = -\varphi_2(0) = \varphi_0$ und $\dot{\varphi}_1(0) = \dot{\varphi}_2(0) = 0$, mit den folgenden Auslenkungs-Funktionen
+  \begin{align}
+    \varphi_1(t) = -\varphi_2(t) = \varphi_0 \cos(\omega_2 t)
+    \label{eq_theo_motion_solution_asym}
+  \end{align}
+
+  Zuletzt ergeben die Anfangsbedingungen $\varphi_1(0) = 0, \varphi_2(0) = \varphi_0$ und $\dot{\varphi}_1(0) = \dot{\varphi}_2(0) = 0$ den Fall der Schwebungsschwingung, welcher umgeformt folgende Auslenkungs-Funktionen besitzt
+  \begin{align}
+    \varphi_1(t) = \varphi_0 \sin(\omega_I t) \cos(\omega_{II} t)
+    \label{eq_theo_motion_solution_beats}
+  \end{align}
+  Wobei $\omega_I = \frac{1}{2}(\omega_1 + \omega_2)$ die Frequenz eines einzelnen Pendels beschreibt, während $\omega_{II} = \frac{1}{2}(\omega_2 - \omega_1)$ die Schwebungsfrequenz ist.
+
+  Als Letztes soll nun noch eine Größe eingeführt werden die die Stärke der Kopplung der beiden Pendel quantifizieren kann. Der Kopplungsgrad $\kappa$ ist durch
+  \begin{align}
+    \kappa = \frac{D'}{D + D'}
+    \label{eq_theo_coupling_factor}
+  \end{align}
+  definiert. Mithilfe der Definitionen von $D$ und $D'$ erhält man daraus
+  \begin{align}
+    \kappa = \frac{\omega_2^2 - \omega_1^2}{\omega_1^2 + \omega_2^2}
+    \label{eq_theo_coupling_factor_with_omega}
+  \end{align}
+
+
+  \section{Auswertung}
+  Zur Auswertung verwendeter Python Code ist unter folgender Url einzusehen: \texttt{http}
+  \subsection{Frequenz der Schwingung ohne Kopplung}
+  \label{sec_no_coupling}
+  Die Kreisfrequenz der reinen Schwingung ohne Kopplung, wird über die gemessenen Anfangs- und Endzeitpunkte von 10 Perioden bestimmt (Messdaten, Tabelle 1).
+  Aus den Anfangs- und Endzeitpunkten $t_1, t_2$ der 10 Perioden ergibt sich jeweils für das linke (im Folgenden mit Index $L$) und das rechte Pendel (im Folgenden mit Index $R$) eine Periodendauer von $T = (t_2 - t_1) / 10$ mit einem Fehler von $\Delta T = \frac{1}{10} \sqrt{\Delta t_1^2 + \Delta t_2^2}$, bzw. eine Kreisfrequenz von $\omega = 2 \pi / T$ mit einem Fehler von $\Delta\omega = \omega \Delta T / T$.
+  Die Berechnung liefert
+  \begin{align}
+    T_L = (1.620 \pm 0.014) \ \text{s} \nonumber \\
+    T_R = (1.615 \pm 0.014) \ \text{s} \nonumber \\
+    \omega_L = (3.88 \pm 0.03) \ 1/\text{s} \nonumber \\
+    \omega_R = (3.89 \pm 0.03) \ 1/\text{s}
+    \label{eq_nc_T_omega}
+  \end{align}
+  Es wird zum späteren Vergleich noch der Mittelwert $\omega = \frac{\omega_L + \omega_R}{2}$ mit Fehler $\Delta \omega = \frac{1}{2} \sqrt{\Delta\omega_L^2 + \Delta\omega_R^2}$ aus den beiden $\omega$-Werten für das rechte und linke Pendel bestimmt.
+  \begin{align}
+    \omega = (3.885 \pm 0.024) \ 1/\text{s}
+    \label{eq_nc_omega}
+  \end{align}
+
+  \subsection{Frequenz der symmetrischen Schwingung}
+  \label{sec_symmetric}
+  Die Kreisfrequenz der symmetrischen Schwingung für den jeweiligen Kopplungsgrad, wird hier sowohl über die gemessenen Anfangs- und Endzeitpunkte von 10 Perioden, als auch über die Vermessung der Peaks im Frequenzspektrum bestimmt (Messdaten, Tabelle 2).
+  Analog zu Abschnitt \ref{sec_no_coupling} ergibt sich also zunächst über die Messung der Dauer von 10 Perioden
+  
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_L$/s & $T_R$/s & $\omega_L$/s$^{-1}$ &$\omega_R$/s$^{-1}$ \\
+      \hline
+      393 $\pm$ 3 & 1.614 $\pm$ 0.014 & 1.614 $\pm$ 0.014 & 3.89 $\pm$ 0.03 & 3.89 $\pm$ 0.03  \\
+      293 $\pm$ 3 & 1.617 $\pm$ 0.014 & 1.609 $\pm$ 0.014 & 3.89 $\pm$ 0.03 & 3.91 $\pm$ 0.03  \\
+      193 $\pm$ 3 & 1.608 $\pm$ 0.014 & 1.603 $\pm$ 0.014 & 3.91 $\pm$ 0.03 & 3.92 $\pm$ 0.03
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen der symmetrischen Schwingung für den jeweiligen Abstand $l$ der Einhängung der Kopplungsfeder von der Pendelachse, gemessen über die Dauer von 10 Perioden.}
+    \label{table_sym_T_omega_left_right}
+  \end{center}
+
+  Aus den Frequenzen $f$ in Tabelle 2 der Messdaten, kann die Kreisfrequenz $\omega_\text{spec}$ über $\omega_\text{spec} = 2 \pi f$ mit einem Fehler von $\Delta \omega_\text{spec} = 2 \pi \Delta f$ bestimmt werden. Zum Vergleich in Tabelle \ref{table_sym_omega} werden dabei die $\omega$-Werte aus Tabelle \ref{table_sym_T_omega_left_right} für das rechte und das linke Pendel analog zu Abschnitt \ref{sec_no_coupling} gemittelt.
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+      $l$/mm & $\omega$/s$^{-1}$ & $\omega_\text{spec}$/s$^{-1}$ & $\omega$, $\omega_\text{spec}$ & $\omega$, $\omega_\text{nc}$ & $\omega_\text{spec}$, $\omega_\text{nc}$ \\
+      \hline
+      393 ± 3 & 3.893 ± 0.024 & 3.90 ± 0.05 &  0.05$\sigma$ & 0.2$\sigma$ & 0.2$\sigma$ \\
+      293 ± 3 & 3.895 ± 0.024 & 3.90 ± 0.03 & 0.005$\sigma$ & 0.3$\sigma$ & 0.3$\sigma$ \\
+      193 ± 3 & 3.914 ± 0.024 & 3.90 ± 0.05 &   0.3$\sigma$ & 0.8$\sigma$ & 0.2$\sigma$
+    \end{tabular}
+    \captionof{table}{Kreisfrequenzen $\omega$ und $\omega_\text{spec}$ der symmetrischen Schwingung über die Dauer von 10 Perioden bzw. über die Peaks des Frequenzspektrums bestimmt, für die jeweiligen Abstände $l$ der Kopplungsfeder. Außerdem die Abweichungen der Kreisfrequenzen untereinander und zu der Kreisfrequenz $\omega_\text{nc}$ der Schwingung ohne Kopplung.}
+    \label{table_sym_omega}
+  \end{center}
+
+  \subsection{Frequenz der asymmetrischen Schwingung}
+  \label{sec_asymmetric}
+  Die Auswertung der Daten der asymmetrischen Schwingung (Messdaten, Tabelle 2) erfolgt nun völlig analog zu Abschnitt \ref{sec_symmetric}. Man erhält zunächst aus den Zeitdauern von 10 Perioden
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_L$/s & $T_R$/s & $\omega_L$/s$^{-1}$ &$\omega_R$/s$^{-1}$ \\
+      \hline
+      393 $\pm$ 3 & 1.358 $\pm$ 0.014 & 1.357 $\pm$ 0.014 & 4.63 $\pm$ 0.05 & 4.63 $\pm$ 0.05 \\
+      293 $\pm$ 3 & 1.455 $\pm$ 0.014 & 1.457 $\pm$ 0.014 & 4.32 $\pm$ 0.04 & 4.31 $\pm$ 0.04 \\
+      193 $\pm$ 3 & 1.537 $\pm$ 0.014 & 1.538 $\pm$ 0.014 & 4.09 $\pm$ 0.04 & 4.09 $\pm$ 0.04
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen der asymmetrischen Schwingung für den jeweiligen Abstand $l$ der Einhängung der Kopplungsfeder von der Pendelachse, gemessen über die Dauer von 10 Perioden.}
+    \label{table_asym_T_omega_left_right}
+  \end{center}
+
+  Und mit den Kreisfrequenzen die aus dem Frequenzspektrum bestimmt werden sowie der Mittelwertbildung erhält man
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c}
+      $l$/mm & $\omega$/s$^{-1}$ & $\omega_\text{spec}$/s$^{-1}$ & $\omega$, $\omega_\text{spec}$ \\
+      \hline
+      393 $\pm$ 3 & 4.63 $\pm$ 0.03   & 4.62 $\pm$ 0.06 & 0.06$\sigma$ \\
+      293 $\pm$ 3 & 4.32 $\pm$ 0.03   & 4.31 $\pm$ 0.06 & 0.07$\sigma$ \\
+      193 $\pm$ 3 & 4.087 $\pm$ 0.027 & 4.08 $\pm$ 0.06 & 0.1$\sigma$
+    \end{tabular}
+    \captionof{table}{Kreisfrequenzen $\omega$ und $\omega_\text{spec}$ der asymmetrischen Schwingung über die Dauer von 10 Perioden bzw. über die Peaks des Frequenzspektrums bestimmt, für die jeweiligen Abstände $l$ der Kopplungsfeder. Außerdem die Abweichungen der Kreisfrequenzen untereinander und zu der Kreisfrequenz $\omega_\text{nc}$ der Schwingung ohne Kopplung.}
+    \label{table_asym_omega}
+  \end{center}
+
+  \subsection{Frequenzen der Schwebungsschwingung und Bestimmung der Kopplungsgrade}
+  \label{sec_beats}
+  Die Bestimmung der Pendel- und Schwebungsfrequenz der Schwebungsschwingung erfolgt für jede einzelne Frequenz analog zu den Abschnitten zuvor.
+  Allerdings ist hier zu beachten, dass die Schwebungsfrequenz hier über die Dauer von 5 Perioden gemessen wurde, während die Pendelfrequenz wie oben über 10 Perioden gemessen wurde (neben der Messung über das Frequenzspektrum).
+  Die Berechnung ergibt für die Pendelfrequenzen
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_{I,L}$/s & $T_{I,R}$/s & $\omega_{I,L}$/s$^{-1}$ & $\omega_{I,R}$/s$^{-1}$ \\
+      \hline
+      393 ± 3 & 17.38 ± 0.28 & 17.13 ± 0.28 &   361 ± 6   &   367 ± 6   \\
+      293 ± 3 & 30.32 ± 0.28 & 30.28 ± 0.28 & 207.2 ± 1.9 & 207.5 ± 1.9 \\
+      193 ± 3 & 68.08 ± 0.28 & 68.17 ± 0.28 &  92.3 ± 0.4 &  92.2 ± 0.4
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen des Pendels der Schwebungsschwingung für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_T_omega_left_right}
+  \end{center}
+
+  und für die Schwebungsfrequenzen
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_{II,L}$/s & $T_{II,R}$/s & $\omega_{II,L}$/s$^{-1}$ & $\omega_{II,R}$/s$^{-1}$ \\
+      \hline
+      393 ± 3 & 17.38 ± 0.28 & 17.13 ± 0.28 &   361 ± 6   &   367 ± 6   \\
+      293 ± 3 & 30.32 ± 0.28 & 30.28 ± 0.28 & 207.2 ± 1.9 & 207.5 ± 1.9 \\
+      193 ± 3 & 68.08 ± 0.28 & 68.17 ± 0.28 &  92.3 ± 0.4 &  92.2 ± 0.4
+    \end{tabular}
+    \captionof{table}{Periodendauer und Kreisfrequenzen der Schwebung der Schwebungsschwingung für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_T_omega_beat_left_right}
+  \end{center}
+
+  Neben der Bestimmung der Frequenzen aus der direkten Messung, sollen allerdings auch die erwarteten theoretischen Werte für diese Frequenzen mithilfe der Definition dieser in (\ref{eq_theo_motion_solution_beats}) berechnet werden.
+  Die dazu benötigten Werte von $\omega_1$ und $\omega_2$ wurden in Abschnitt \ref{sec_symmetric} und \ref{sec_asymmetric} bestimmt (Es werden die direkt über die Periodendauern bestimmten Frequenzen verwendet).
+  Die Berechnungsformeln der Pendel- und Schwebungsfrequenz lauten (exp soll hierbei für \glqq expected\grqq{} stehen und nicht für experimentell)
+  \begin{align}
+    \omega_{I,\text{exp}} = \frac{1}{2} (\omega_1 + \omega_2)&, \quad \Delta\omega_I = \frac{1}{2} \sqrt{\Delta\omega_1^2 + \Delta\omega_2^2} \nonumber \\
+    \omega_{II,\text{exp}} = \frac{1}{2} (\omega_2 - \omega_1)&, \quad \Delta\omega_{II} = \frac{1}{2} \sqrt{\Delta\omega_1^2 + \Delta\omega_2^2}
+    \label{eq_omega_I_II}
+  \end{align}
+  Eine Berechnung dieser sowie Mittelwertbildung der jeweiligen Frequenzen vom rechten und linken Pendel (analog zu oben), liefert die folgenden Resultate für die Pendelfrequenzen
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c|c}
+      $l$/mm & $\omega_I$/s$^{-1}$ & $\omega_{I,\text{spec}}$/s$^{-1}$ & $\omega_{I,\text{exp}}$ & $\omega_I$, $\omega_{I,\text{spec}}$ & $\omega_I$, $\omega_{I,\text{exp}}$ & $\omega_{I,\text{spec}}$, $\omega_{I,\text{exp}}$ \\
+      \hline
+      393 ± 3 &  4.60 ± 0.03  &  4.26 ± 0.04  & 4.3 ± 1.9 &     7$\sigma$ &    0.2$\sigma$ &  0.002$\sigma$ \\
+      293 ± 3 &  4.32 ± 0.03  & 4.103 ± 0.027 & 4.1 ± 1.9 &     5$\sigma$ &    0.1$\sigma$ &  0.001$\sigma$ \\
+      193 ± 3 & 3.912 ± 0.024 & 3.984 ± 0.013 &   4 ± 2   &   2.6$\sigma$ &   0.04$\sigma$ &  0.008$\sigma$
+    \end{tabular}
+    \captionof{table}{Pendelfrequenzen der Schwebungsschwingung, bestimmt durch die Messung der Dauer von 10 Perioden, über die Vermessung der Peaks des Frequenzspektrums und über \ref{eq_omega_I_II} sowie die Abweichungen dieser voneinander, alles für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_omega_I}
+  \end{center}
+
+  sowie für die Schwebungsfrequenzen
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c|c}
+      $l$/mm & $\omega_{II}$/s$^{-1}$ & $\omega_{II,\text{spec}}$/s$^{-1}$ & $\omega_{II,\text{exp}}$ & $\omega_{II}$, $\omega_{II,\text{spec}}$ & $\omega_{II}$, $\omega_{II,\text{exp}}$ & $\omega_{II,\text{spec}}$, $\omega_{II,\text{exp}}$ \\
+      \hline
+      393 ± 3 &   364 ± 4    & 360 ± 40 & 368 ± 21 &   0.07$\sigma$ & 0.2$\sigma$ &  0.1$\sigma$ \\
+      293 ± 3 & 207.4 ± 1.4  & 207 ± 27 & 210 ± 19 & 0.0003$\sigma$ & 0.1$\sigma$ & 0.08$\sigma$ \\
+      193 ± 3 & 92.23 ± 0.27 &  94 ± 13 &  87 ± 18 &    0.2$\sigma$ & 0.3$\sigma$ &  0.3$\sigma$
+    \end{tabular}
+    \captionof{table}{Schwebungsfrequenzen der Schwebungsschwingung, bestimmt durch die Messung der Dauer von 5 Perioden, über die Vermessung der Peaks des Frequenzspektrums und über \ref{eq_omega_I_II} sowie die Abweichungen dieser voneinander, alles für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_omega_II}
+  \end{center}
+
+  Mithilfe dieser können nun noch die Kopplungsgrade für die verschiedenen $l$-Werte berechnet werden.
+  Dies geschieht mit (\ref{eq_theo_coupling_factor_with_omega})
+  \begin{align}
+    \kappa &= \frac{\omega_2^2 - \omega_1^2}{\omega_1^2 + \omega_2^2} \nonumber \\
+    \Delta\kappa &= \kappa \sqrt{4 (\omega_1^2 \Delta\omega_1^2 + \omega_2^2 \Delta\omega_2^2) \left(\frac{1}{(\omega_2^2 - \omega_1^2)^2} + \frac{1}{(\omega_1^2 + \omega_2^2)^2} \right)}
+    \label{eq_coupling_factor}
+  \end{align}
+  Diese so berechneten Werte für die Kopplungsgrade sollen außerdem mit der Theorie verglichen werden.
+  Dies geschieht hier über die Verhältnisse der $\kappa$-Werte sowie die Verhältnisse der $l^2$-Werte, da laut Definition $D' \sim l^2$ und somit, mit (\ref{eq_theo_coupling_factor}) $\kappa \sim l^2$.
+  Das heißt mit Indizierung $\kappa_i$ und $l_i^2$ muss $\kappa_{i+1} / \kappa_i = l_{i+1}^2 / l_i^2$ gelten.
+  Diese Verhältnisse besitzen die folgenden Fehler
+  \begin{align}
+    \Delta\left(\frac{\kappa_{i+1}}{\kappa_i}\right) = \frac{\kappa_{i+1}}{\kappa_i} \sqrt{\left(\frac{\Delta\kappa_i}{\kappa_i} \right)^2 + \left(\frac{\Delta\kappa_{i+1}}{\kappa_{i+1}} \right)^2} \nonumber \\
+    \Delta\left(\frac{l_{i+1}^2}{l_i^2}\right) = \frac{2 l_{i+1}^2}{l_i^2} \sqrt{\left(\frac{\Delta l_i}{l_{i}}\right)^2 + \left(\frac{\Delta l_{i+1}}{l_{i+1}}\right)^2}
+    \label{eq_coupling_factor_errors}
+  \end{align}
+  Die Berechnung der Kopplungsgrade und der obigen Verhältnisse liefert
+
+  \begin{center}
+    \begin{tabular}{c|c}
+      $l$/mm & $\kappa$ \\
+      \hline
+      393 ± 3 & 0.171 ± 0.010 \\
+      293 ± 3 & 0.102 ± 0.009 \\
+      193 ± 3 & 0.043 ± 0.009
+    \end{tabular}
+    \captionof{table}{Kopplungsgrad $\kappa$ der Pendel für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_coupling_factors}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c}
+      $\kappa_{i+1} / \kappa_i$ & $l_{i+1}^2/l_i^2$ & $\kappa_{i+1} / \kappa_i$, $l_{i+1}^2/l_i^2$ \\
+      \hline
+      0.600 ± 0.070 & 0.556 ± 0.014 & 0.6$\sigma$ \\
+      0.420 ± 0.100 & 0.434 ± 0.016 & 0.1$\sigma$
+    \end{tabular}
+    \captionof{table}{Verhältnisse der Kopplungsgrade $\kappa_{i+1} / \kappa_i$ sowie Verhältnisse der Quadrate $l_{i+1}^2/l_i^2$ der Abstände $l$ der Federaufhängung von der Pendelachse und die Abweichungen dieser voneinander}
+    \label{table_beats_coupling_factors_ratio}
+  \end{center}
+
+  \section{Diskussion}
+  In diesem Versuch wurden die charakteristischen Frequenzen der Schwingung eines gekoppelten Pendels für verschiedene Anfangsbedingungen mit zwei unterschiedlichen Verfahren bestimmt.
+  Diese Messungen erfolgten dabei für verschiedene Kopplungsgrade.
+  Die Verhältnisse diese Kopplungsgrade wurden dabei einmal theoretisch über die gemessenen Frequenzen sowie experimentell mithilfe der Abstände der Federaufhängung von der Pendelachse bestimmt.
+  Die Frequenzen der verschiedenen Schwingungsarten wurden zuletzt innerhalb der verschiedenen Messverfahren verglichen sowie in Vergleich mit der Theorie gestellt.
+  Der Vergleich zwischen Experiment und Theorie erfolgt ebenfalls für die Kopplungsgrade.
+
+  Es wurde außerdem qualitativ die Schwingung eines gekoppelten elektrischen Schwingkreises beobachtet, welcher grundsätzlich ein, mit der Schwebungsschwingung der mechanischen Pendeln übereinstimmendes Schwingungsverhalten aufweist.
+
+  Bei der Diskussion der Messwerte ist zunächst einmal nebenbei zu erwähnen, dass, wie natürlich erwartet, die Werte für die Frequenzen bzw. Periodendauern für das rechte und linke Pendel bei allen Messungen übereinstimmen, d.h. das die Symmetrieannahme hier gerechtfertigt ist.
+
+  Als Nächstes erhält man bei der symmetrischen Schwingung jeweilige Übereinstimmung der Frequenzwerte $\omega, \omega_\text{spec}$ von beiden Messverfahren sowie der Frequenz $\omega_\text{nc}$ der ungekoppelten Schwingung. Alle Abweichungen liegen hier unter bzw. weit unter $1\sigma$ (vgl. Tabelle \ref{table_sym_omega}), was im Normalfall für eine Überschätzung der Fehler sprechen würde.
+  Diese kann aber eigentlich nur bei der Bestimmung der Periodendauer vorliegen, allerdings sorgt die Unsicherheit von $\omega_\text{spec}$ hierbei genauso oder stärker für sehr geringe Abweichungen, insbesondere zu $\omega$ selbst.
+  Somit ist der Grund für die Größe dieser Abweichungen nicht direkt absehbar.
+
+  Bei der asymmetrischen Schwingung erhält man ähnliche Ergebnisse, d.h. ebenfalls eine Übereinstimmung von $\omega$ und $\omega_\text{spec}$ mit bemerkenswert geringen Abweichungen (vgl. Tabelle \ref{table_asym_omega}) allerdings wie zu erwarten eine signifikant höhere Frequenz als bei der symmetrischen Schwingung bzw. als ohne Kopplung.
+
+  Die Übereinstimmung der Frequenzen beider Verfahren ist ebenfalls für die Schwebungsfrequenz der Schwebungsschwingung gegeben, allerdings nicht für die Pendelfrequenz (vgl. Tabellen \ref{table_beats_omega_I} und \ref{table_beats_omega_II}).
+  Mit $7\sigma$, $5\sigma$ und $2.6\sigma$ erhält man Werte die entweder deutlich über $3\sigma$ liegen, oder dieser Grenze sehr nahe kommen.
+  Auch hier ist es nicht wirklich absehbar woher diese Abweichung kommen könnte, da beide Werte aus den gleichen Daten gewonnen wurden, hier also eigentlich kein Fehler bei der Messung vorliegen kann.
+  Dagegen erhält man wie bereits oben, eine Übereinstimmung mit sehr geringen Abweichungen aller entsprechener Werte mit $\omega_{I, \text{exp}}$ und $\omega_{II, \text{exp}}$.
+
+  Zuletzt erhält man auch für die Verhältnisse der Kopplungsgrade Übereinstimmung zwischen Experiment und Theorie (vgl. Tabelle \ref{table_beats_coupling_factors_ratio}), mit nicht all zu kleinen Abweichungen die allerdings alle wieder unter $1\sigma$ liegen.
+  Dies ist hier allerdings nicht weiter verwunderlich, da dieses Verhalten vermutlich von den Frequenzen die den Kopplungsgraden zugrunde leigen vererbt wurden.
+  Dieser Verdacht bestätigt sich, wenn man beobachtet, dass die Fehler der Kopplungsgrade ausschlaggebend für die Abweichungen der Werte sind.
+
+  Insgesamt erhält man also bei allen Werten Übereinstimmung mit der Theorie, allerdings ist die Messtechnik an einigen Stellen anzuzweifeln, da die geringen und teilweise signifikant hohen Abweichungen eine Inkonsistenz in den verwendeten Messverfahren vermuten lässt.
+
+
+
+\end{document}
