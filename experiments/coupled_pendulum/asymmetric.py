@@ -2,18 +2,17 @@ import numpy as np
 import scipy.constants as cs
 from numpy import pi, sqrt
 
-import data.print as dpr
+import datproc.print as dpr
 import general as gen
-import nocoupling as nc
 
 
 ## Data
-tl = np.array([[1.78, 17.92], [2.91, 19.08], [1.84, 17.92]])
-tr = np.array([[1.79, 17.93], [1.34, 17.43], [1.85, 17.88]])
+tl = np.array([[1.23, 14.81], [1.26, 15.81], [1.45, 16.82]])
+tr = np.array([[1.92, 15.49], [1.96, 16.53], [2.20, 17.58]])
 d_tl = np.array([[0.1, 0.1], [0.1, 0.1], [0.1, 0.1]])
 d_tr = np.array([[0.1, 0.1], [0.1, 0.1], [0.1, 0.1]])
-f = np.array([0.620, 0.620, 0.620])
-d_f = np.array([0.008, 0.005, 0.008])
+f = np.array([0.736, 0.686, 0.649])
+d_f = np.array([0.009, 0.01, 0.009])
 
 
 ## Data preparation
@@ -40,9 +39,7 @@ d_omega_spec = 2.0 * pi * d_f
 
 
 ## Output
-omega_nc_array = np.full_like(omega, nc.omega)
-d_omega_nc_array = np.full_like(omega, nc.d_omega)
-if __name__ == "__main__":
+if __name__ == '__main__':
   print(dpr.tbl([
     dpr.lst(gen.l, gen.d_l, name='l', unit='m'),
     dpr.lst(Tl, d_Tl, name='TL', unit='s'),
@@ -56,6 +53,4 @@ if __name__ == "__main__":
     dpr.lst(omega, d_omega, name='ω', prefix=False, unit='1/s'),
     dpr.lst(omega_spec, d_omega_spec, name='ω_spec', prefix=False, unit='1/s'),
     dpr.dev(omega, d_omega, omega_spec, d_omega_spec, name='ω, ω_spec'),
-    dpr.dev(omega, d_omega, omega_nc_array, d_omega_nc_array, name='ω, ω_nc'),
-    dpr.dev(omega_spec, d_omega_spec, omega_nc_array, d_omega_nc_array, name='ω_spec, ω_nc')
-  ], name='Symmetric oscillation frequencys'))
+  ], name='Antisymmetric oscillation frequencys'))

@@ -3,7 +3,7 @@ import numpy as np
 import scipy.constants as cs
 from numpy import pi, sqrt
 
-import data.print as dpr
+import datproc.print as dpr
 
 ## Data
 tl = np.array([1.03, 17.23])

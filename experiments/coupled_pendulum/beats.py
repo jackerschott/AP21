@@ -2,7 +2,7 @@ import numpy as np
 import scipy.constants as cs
 from numpy import pi, sqrt
 
-import data.print as dpr
+import dataproc.print as dpr
 import general as gen
 import symmetric as sym
 import asymmetric as asym
