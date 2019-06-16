@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import scipy.constants as cs
 
 from matplotlib.collections import LineCollection
 from numpy import sqrt, exp
@@ -12,7 +14,7 @@ linspace_res = 2000 # resolution for nplinspace
 
 
 def initplot(num=0, nrows=1, ncols=1, title='', xlabel='', ylabel='', scale='linlin', fignum=False):
-  fig, axs = plt.subplots(nrows=nrows, ncols=ncols)
+  fig, axs = plt.subplots(nrows=nrows, ncols=ncols, num=num)
   if fignum:
     if nrows != 1 or ncols != 1:
       st = fig.suptitle('Diagramm ' + str(num) + ': ' + title, fontsize='14')
@@ -38,7 +40,8 @@ def initplot(num=0, nrows=1, ncols=1, title='', xlabel='', ylabel='', scale='lin
     elif (scale == 'loglog'):
       ax.set_yscale('log')
       ax.set_xscale('log')
-  fig.set_size_inches(11.69,8.27)
+  figwidth = 16.0 * cs.centi / cs.inch
+  fig.set_size_inches(figwidth, figwidth / sqrt(2))
   fig.tight_layout()
   if nrows != 1 or ncols != 1:
     st.set_y(0.97)
@@ -47,13 +50,29 @@ def initplot(num=0, nrows=1, ncols=1, title='', xlabel='', ylabel='', scale='lin
 def set_axis(num):
   plt.sca(plt.gcf().axes[num])
 
-def plot(x, y, label='', color=None):
+def plot(x, y, x_unit=1, y_unit=1, label='', color=None):
+  # Unit conversion
+  if x_unit != 1:
+    x = x.copy() / x_unit
+    dx = dx.copy() / x_unit
+  if y_unit != 1:
+    y = y.copy() / y_unit
+    dy = dy.copy() / y_unit
+
   plot = plt.plot(x, y, label=label, color=color)
   if label != '':
     plt.legend()
   return plot
 
-def plotdata(x, y, dy=None, dx=None, label='', color=None, connect=False):
+def plotdata(x, y, dy=None, dx=None, x_unit=1, y_unit=1, label='', color=None, connect=False):
+  # Unit conversion
+  if x_unit != 1:
+    x = x.copy() / x_unit
+    dx = dx.copy() / x_unit
+  if y_unit != 1:
+    y = y.copy() / y_unit
+    dy = dy.copy() / y_unit
+
   plot = plt.errorbar(x=x, y=y, yerr=dy, xerr=dx, label=label, color=color, fmt='o', markersize=3, capsize=5)
   # Other plot options
   for cap in plot[1]:
@@ -66,7 +85,16 @@ def plotdata(x, y, dy=None, dx=None, label='', color=None, connect=False):
     plt.legend()
   return plot
 
-def linreg(x, y, dy, dx=None, fit_range=None, plot=False, graphname='', legend=False, scaleReg=False):
+def linreg(x, y, dy, dx=None, x_unit=1, y_unit=1, fit_range=None, plot=False, graphname='', legend=False, scaleReg=False):
+  # Unit conversion
+  if x_unit != 1:
+    x = x.copy() / x_unit
+    if not dx is None:
+      dx = dx.copy() / x_unit
+  if y_unit != 1:
+    y = y.copy() / y_unit
+    dy = dy.copy() / y_unit
+
   # Set fit range if None
   if (fit_range == None):
     fit_range = range(len(x))
@@ -83,38 +111,34 @@ def linreg(x, y, dy, dx=None, fit_range=None, plot=False, graphname='', legend=F
       s3 += x[i]**2 * dy[i]**-2
       s4 += x[i] * y[i] * dy[i]**-2
     eta = s0 * s3 - s1**2
-    g = (s0 * s4 - s1 * s2) / eta
-    dg = np.sqrt(s0 / eta)
+    s = (s0 * s4 - s1 * s2) / eta
+    ds = np.sqrt(s0 / eta)
     b = (s3 * s2 - s1 * s4) / eta
     db = np.sqrt(s3 / eta)
-    return [g, dg, b, db]
+    return s, ds, b, db
 
   # Compute slope and axis intercept
-  iter0 = linreg_iter(x, y, dy)
-  result = []
+  s, ds, b, db = linreg_iter(x, y, dy)
   dx_ = dx
   if (dx is None):
     dx_ = np.zeros(len(x))
-    result = iter0
   else:
-    g = iter0[0]
-    g_old = g * (1 - 2 * linreg_change)
+    s_old = s * (1 - 2 * linreg_change)
     dy_ = dy
-    while (abs(1 - g_old / g) >= linreg_change):
-      g_old = g
-      dy_ = np.sqrt((g * dx)**2 + dy_**2)
-      g = linreg_iter(x, y, dy_)[0]
-    result = linreg_iter(x, y, dy_)
+    while (abs(1 - s_old / s) >= linreg_change):
+      s_old = s
+      dy_ = np.sqrt((s * dx)**2 + dy_**2)
+      s = linreg_iter(x, y, dy_)[0]
+    s, ds, b, db = linreg_iter(x, y, dy_)
   
   # Plot
   if (plot):
     # Get data for regression line plot
-    [g, dg, b, db] = result
     min_x = np.argmin(x)
     max_x = np.argmax(x)
     xint = np.linspace(x[min_x] - dx_[min_x], x[max_x] + dx_[max_x], linspace_res)
-    yfit = g * xint + b
-    yerr = (g + dg) * xint + (b - db)
+    yfit = s * xint + b
+    yerr = (s + ds) * xint + (b - db)
 
     # Plot data points
     data_plot = plotdata(x=x, y=y, dy=dy, dx=dx, label=graphname)
@@ -136,7 +160,7 @@ def linreg(x, y, dy, dx=None, fit_range=None, plot=False, graphname='', legend=F
       plt.legend(['Fit', 'Fit uncertainty'])
     elif (graphname != ''):
       plt.legend()
-  return result
+  return s * y_unit / x_unit, ds * y_unit / x_unit, b * y_unit, db * y_unit
 
 def expreg(x, y, dy, dx=None, fit_range=None, plot=True):
   if fit_range == None:
@@ -189,7 +213,10 @@ def lin_yerr(x, dx, y, dy):
     return new_dy
 
 
-def savefigs(path):
-  # Save figures in 'path' as figN.pdf, where N is the figures number
+def savefigs(path, format='pdf'):
+  if not os.path.exists(path):
+    os.makedirs(path)
+  pad_inches = 0.0 if format == 'pgf' else 0.6
+  # Save figures in 'path' as figN.<format>, where N is the figures number
   for i in plt.get_fignums():
-    plt.figure(i).savefig(path + '/fig' + str(i) +'.pdf', papertype='a4', orientation='landscape', bbox_inches='tight', pad_inches=0.6, format='pdf')
+    plt.figure(i).savefig(path + '/fig' + str(i) +'.' + format, bbox_inches='tight', pad_inches=pad_inches, format=format)
