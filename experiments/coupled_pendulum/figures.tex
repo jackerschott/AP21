@@ -1,0 +1,131 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+
+\begin{document}
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_L$/s & $T_R$/s & $\omega_L$/s$^{-1}$ &$\omega_R$/s$^{-1}$ \\
+      \hline
+      393 $\pm$ 3 & 1.614 $\pm$ 0.014 & 1.614 $\pm$ 0.014 & 3.89 $\pm$ 0.03 & 3.89 $\pm$ 0.03  \\
+      293 $\pm$ 3 & 1.617 $\pm$ 0.014 & 1.609 $\pm$ 0.014 & 3.89 $\pm$ 0.03 & 3.91 $\pm$ 0.03  \\
+      193 $\pm$ 3 & 1.608 $\pm$ 0.014 & 1.603 $\pm$ 0.014 & 3.91 $\pm$ 0.03 & 3.92 $\pm$ 0.03
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen der symmetrischen Schwingung für den jeweiligen Abstand $l$ der Einhängung der Kopplungsfeder von der Pendelachse, gemessen über die Dauer von 10 Perioden.}
+    \label{table_sym_T_omega_left_right}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+      $l$/mm & $\omega$/s$^{-1}$ & $\omega_\text{spec}$/s$^{-1}$ & $\omega$, $\omega_\text{spec}$ & $\omega$, $\omega_\text{nc}$ & $\omega_\text{spec}$, $\omega_\text{nc}$ \\
+      \hline
+      393 ± 3 & 3.893 ± 0.024 & 3.90 ± 0.05 &  0.05$\sigma$ & 0.2$\sigma$ & 0.2$\sigma$ \\
+      293 ± 3 & 3.895 ± 0.024 & 3.90 ± 0.03 & 0.005$\sigma$ & 0.3$\sigma$ & 0.3$\sigma$ \\
+      193 ± 3 & 3.914 ± 0.024 & 3.90 ± 0.05 &   0.3$\sigma$ & 0.8$\sigma$ & 0.2$\sigma$
+    \end{tabular}
+    \captionof{table}{Kreisfrequenzen $\omega$ und $\omega_\text{spec}$ der symmetrischen Schwingung über die Dauer von 10 Perioden bzw. über die Peaks des Frequenzspektrums bestimmt, für die jeweiligen Abstände $l$ der Kopplungsfeder. Außerdem die Abweichungen der Kreisfrequenzen untereinander und zu der Kreisfrequenz $\omega_\text{nc}$ der Schwingung ohne Kopplung.}
+    \label{table_sym_omega}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_L$/s & $T_R$/s & $\omega_L$/s$^{-1}$ &$\omega_R$/s$^{-1}$ \\
+      \hline
+      393 $\pm$ 3 & 1.358 $\pm$ 0.014 & 1.357 $\pm$ 0.014 & 4.63 $\pm$ 0.05 & 4.63 $\pm$ 0.05 \\
+      293 $\pm$ 3 & 1.455 $\pm$ 0.014 & 1.457 $\pm$ 0.014 & 4.32 $\pm$ 0.04 & 4.31 $\pm$ 0.04 \\
+      193 $\pm$ 3 & 1.537 $\pm$ 0.014 & 1.538 $\pm$ 0.014 & 4.09 $\pm$ 0.04 & 4.09 $\pm$ 0.04
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen der asymmetrischen Schwingung für den jeweiligen Abstand $l$ der Einhängung der Kopplungsfeder von der Pendelachse, gemessen über die Dauer von 10 Perioden.}
+    \label{table_asym_T_omega_left_right}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c}
+      $l$/mm & $\omega$/s$^{-1}$ & $\omega_\text{spec}$/s$^{-1}$ & $\omega$, $\omega_\text{spec}$ \\
+      \hline
+      393 $\pm$ 3 & 4.63 $\pm$ 0.03   & 4.62 $\pm$ 0.06 & 0.06$\sigma$ \\
+      293 $\pm$ 3 & 4.32 $\pm$ 0.03   & 4.31 $\pm$ 0.06 & 0.07$\sigma$ \\
+      193 $\pm$ 3 & 4.087 $\pm$ 0.027 & 4.08 $\pm$ 0.06 & 0.1$\sigma$
+    \end{tabular}
+    \captionof{table}{Kreisfrequenzen $\omega$ und $\omega_\text{spec}$ der asymmetrischen Schwingung über die Dauer von 10 Perioden bzw. über die Peaks des Frequenzspektrums bestimmt, für die jeweiligen Abstände $l$ der Kopplungsfeder. Außerdem die Abweichungen der Kreisfrequenzen untereinander und zu der Kreisfrequenz $\omega_\text{nc}$ der Schwingung ohne Kopplung.}
+    \label{table_asym_omega}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_{I,L}$/s & $T_{I,R}$/s & $\omega_{I,L}$/s$^{-1}$ & $\omega_{I,R}$/s$^{-1}$ \\
+      \hline
+      393 ± 3 & 17.38 ± 0.28 & 17.13 ± 0.28 &   361 ± 6   &   367 ± 6   \\
+      293 ± 3 & 30.32 ± 0.28 & 30.28 ± 0.28 & 207.2 ± 1.9 & 207.5 ± 1.9 \\
+      193 ± 3 & 68.08 ± 0.28 & 68.17 ± 0.28 &  92.3 ± 0.4 &  92.2 ± 0.4
+    \end{tabular}
+    \captionof{table}{Periodendauern und Kreisfrequenzen des Pendels der Schwebungsschwingung für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_T_omega_left_right}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $l$/mm & $T_{II,L}$/s & $T_{II,R}$/s & $\omega_{II,L}$/s$^{-1}$ & $\omega_{II,R}$/s$^{-1}$ \\
+      \hline
+      393 ± 3 & 17.38 ± 0.28 & 17.13 ± 0.28 &   361 ± 6   &   367 ± 6   \\
+      293 ± 3 & 30.32 ± 0.28 & 30.28 ± 0.28 & 207.2 ± 1.9 & 207.5 ± 1.9 \\
+      193 ± 3 & 68.08 ± 0.28 & 68.17 ± 0.28 &  92.3 ± 0.4 &  92.2 ± 0.4
+    \end{tabular}
+    \captionof{table}{Periodendauer und Kreisfrequenzen der Schwebung der Schwebungsschwingung für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_T_omega_beat_left_right}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c|c}
+      $l$/mm & $\omega_I$/s$^{-1}$ & $\omega_{I,\text{spec}}$/s$^{-1}$ & $\omega_{I,\text{exp}}$ & $\omega_I$, $\omega_{I,\text{spec}}$ & $\omega_I$, $\omega_{I,\text{exp}}$ & $\omega_{I,\text{spec}}$, $\omega_{I,\text{exp}}$ \\
+      \hline
+      393 ± 3 &  4.60 ± 0.03  &  4.26 ± 0.04  & 4.3 ± 1.9 &     7$\sigma$ &    0.2$\sigma$ &  0.002$\sigma$ \\
+      293 ± 3 &  4.32 ± 0.03  & 4.103 ± 0.027 & 4.1 ± 1.9 &     5$\sigma$ &    0.1$\sigma$ &  0.001$\sigma$ \\
+      193 ± 3 & 3.912 ± 0.024 & 3.984 ± 0.013 &   4 ± 2   &   2.6$\sigma$ &   0.04$\sigma$ &  0.008$\sigma$
+    \end{tabular}
+    \captionof{table}{Pendelfrequenzen der Schwebungsschwingung, bestimmt durch die Messung der Dauer von 10 Perioden, über die Vermessung der Peaks des Frequenzspektrums und über (2.3) sowie die Abweichungen dieser voneinander, alles für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_omega_I}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c|c}
+      $l$/mm & $\omega_{II}$/s$^{-1}$ & $\omega_{II,\text{spec}}$/s$^{-1}$ & $\omega_{II,\text{exp}}$ & $\omega_{II}$, $\omega_{II,\text{spec}}$ & $\omega_{II}$, $\omega_{II,\text{exp}}$ & $\omega_{II,\text{spec}}$, $\omega_{II,\text{exp}}$ \\
+      \hline
+      393 ± 3 &   364 ± 4    & 360 ± 40 & 368 ± 21 &   0.07$\sigma$ & 0.2$\sigma$ &  0.1$\sigma$ \\
+      293 ± 3 & 207.4 ± 1.4  & 207 ± 27 & 210 ± 19 & 0.0003$\sigma$ & 0.1$\sigma$ & 0.08$\sigma$ \\
+      193 ± 3 & 92.23 ± 0.27 &  94 ± 13 &  87 ± 18 &    0.2$\sigma$ & 0.3$\sigma$ &  0.3$\sigma$
+    \end{tabular}
+    \captionof{table}{Schwebungsfrequenzen der Schwebungsschwingung, bestimmt durch die Messung der Dauer von 5 Perioden, über die Vermessung der Peaks des Frequenzspektrums und über (2.3) sowie die Abweichungen dieser voneinander, alles für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_omega_II}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c}
+      $l$/mm & $\kappa$ \\
+      \hline
+      393 ± 3 & 0.171 ± 0.010 \\
+      293 ± 3 & 0.102 ± 0.009 \\
+      193 ± 3 & 0.043 ± 0.009
+    \end{tabular}
+    \captionof{table}{Kopplungsgrad $\kappa$ der Pendel für den jeweiligen Abstand $l$ der Federaufhängung von der Pendelachse.}
+    \label{table_beats_coupling_factors}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c|c|c}
+      $\kappa_{i+1} / \kappa_i$ & $l_{i+1}^2/l_i^2$ & $\kappa_{i+1} / \kappa_i$, $l_{i+1}^2/l_i^2$ \\
+      \hline
+      0.600 ± 0.070 & 0.556 ± 0.014 & 0.6$\sigma$ \\
+      0.420 ± 0.100 & 0.434 ± 0.016 & 0.1$\sigma$
+    \end{tabular}
+    \captionof{table}{Verhältnisse der Kopplungsgrade $\kappa_{i+1} / \kappa_i$ sowie Verhältnisse der Quadrate $l_{i+1}^2/l_i^2$ der Abstände $l$ der Federaufhängung von der Pendelachse und die Abweichungen dieser voneinander}
+    \label{table_beats_coupling_factors_ratio}
+  \end{center}
+\end{document}
