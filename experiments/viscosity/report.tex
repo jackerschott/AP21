@@ -1,0 +1,311 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{pgf}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+
+\author{Jona Ackerschott}
+\title{Messprotokoll}
+\subtitle{Versuch 212 $-$ Zähigkeit von Flüssigkeiten}
+\date{\today}
+
+\begin{document}
+  \maketitle
+
+  \tableofcontents
+
+  \newpage
+  \section{Einleitung}
+  \subsection{Motivation}
+  In diesem Versuch wird die Viskosität von Polyethylenglykol (PEG) zum Einen durch das Stoke'sche Gesetz mithilfe eines Kugelfallviskosimeters und zum Anderen durch das Hagen-Poiseuille Gesetz mithilfe eines Kapillarviskosimeters bestimmt.
+  Die durch diese beiden Verfahren bestimmten Viskositäten sollen dabei miteinander verglichen werden.
+  Des Weiteren wird die Grenze der Gültigkeit des Stoke'schen Gesetzes bestimmt, indem die die kinetische Energie die für den Übergang von laminarer zu turbulenter Strömung nötig ist durch die Reynoldszahl abgeschätzt wird.
+
+  \subsection{Messverfahren}
+  Die erste Messung der Viskosität von PEG erfolgt mithilfe eines Kugelfallviskosimeters nach Stokes.
+  Dabei wird in einem mit PEG gefüllten Glasrohr die Fallzeit von Kugeln mit verschiedenen Radien über eine vorher festgelegte Strecke gemessen.
+  Die Fallstrecken werden dabei so gewählt, dass sich die Kugeln beim Durchlauf des Streckenanfangs mit konstanter Geschwindigkeit bewegen.
+  Es ist dabei darauf zu achten, dass sich keine Luftblässchen an den Kugeln befinden, da diese das Ergebnis verfälschen würden, weshalb diese bereits vorher mit etwas Flüssigkeit benetzt werden.
+  Der Radius des Fallrohrs ist ebenfalls zu messen, sowie die Raumtemperatur bei der Messung mit den kleinsten Kugeln.
+
+  Die zweite Messung erfolgt mithilfe eines Kapillarviskosimeters nach Hagen-Poiseuille.
+  Dazu wird ebenfalls ebenfalls das oben genannte Glasrohr verwendet, an dem unten eine Kapillare befestigt ist.
+  Unter dem Ausfluss dieser wird ein Becherglas untergestellt und der Ausfluss der Kapillare geöffnet.
+  Sobald eine gleichmäßige Tropenfolge zu beobachten ist kann ein Messzylinder untergestellt und eine Stoppuhr gestartet werden um das pro Zeit ausgeflossene Volumen zu messen.
+  Das Unterstellen des Messzylinders erfolgt dabei gleichzeitig mit einer Höhenmessung der Flüssigkeit in der Glasröhre.
+  Letzteres dient dabei der Berechnung der Druckdifferenz an der Kapillare.
+  Nun wird alle 5 cm$^3$ Ausflussvolumen die Zeit gemessen bis 25 cm$^3$ erreicht sind.
+  Nach der Messung dieses Zeitpunkts wird erneut die Höhe der Flüssigkeit im Glasrohr abgelesen und die Raumtemperatur bestimmt.
+
+  \subsection{Theoretische Grundlagen}
+  \subsubsection{Bestimmung der Viskosität einer Flüssigkeit nach Stokes}
+  Bei der Bewegung einer Kugel mit Radius $r$ und konstanter Geschwindigkeit $v$ durch eine unendlich ausgedehnte Flüssigkeit der Viskosität $\eta$ wirkt bei laminarer Strömung die Stokes'sche Reibungskraft
+  \begin{align}
+    F_R = 6 \pi \eta r v
+    \label{eq_theo_stokes_friction}
+  \end{align}
+  Da die hier betrachtete Bewegung mit konstanter Geschwindigkeit $v$ erfolgt muss hier ein Kräftegleichgewicht wirken.
+  Das heißt die außerdem wirkende Gewichtskraft $F_g = \varrho_K V_K g$ und Auftriebskraft $F_A = -\varrho_F V_K g$ müssen gerade der Stokes'schen Reibungskraft entsprechen. Somit gilt
+  \begin{align}
+    F_g + F_A + F_R = 0
+    \label{eq_theo_stokes_force_equilibrium}
+  \end{align}
+  Dabei sind $\varrho_K$, $V_K$ Dichte und Volumen der Kugel, während $\varrho_F$ die Dichte der Flüssigkeit beschreibt.
+  Nach einigen Umformungen erhält man daraus eine Formel für $\eta$
+  \begin{align}
+    \eta = \frac{2}{9} \, g \, \frac{\varrho_K - \varrho_F}{v} \, r^2
+    \label{eq_theo_stokes_viscosity}
+  \end{align}
+
+  \subsubsection{Bestimmung der Viskosität nach Hagen-Poiseuille}
+  Die Viskosität einer Flüssigkeit kann mithilfe des Gesetzes von Hagen-Poiseuille bestimmt werden, welches den Volumenfluss eines Rohres beschreibt.
+  In einem Rohr der Länge $L$ mit Radius $R$ an dessen Stirnflächen eine Druckdifferenz $\Delta p = p_1 - p_2$ herrscht, wirkt auf einem koaxialen Flüssigkeitszylinder mit Radius $r$ zum Einen eine durch die Druckdifferenz induzierte Kraft
+  \begin{align}
+    F_p = \pi r^2 \Delta p
+    \label{eq_theo_hp_force_pressure_diff}
+  \end{align}
+  und zum Anderen eine Reibungskraft
+  \begin{align}
+    F_R = -2 \pi r L \eta \frac{d v}{d r}
+    \label{eq_theo_hp_force_friction}
+  \end{align}
+  Letztere erhält man mithilfe der Formel für die Newtonsche Reibungskraft
+  \begin{align}
+    F_R = \eta A \frac{d v}{d r}
+    \label{eq_theo_hp_friction_newton}
+  \end{align}
+  welche die Reibungskraft auf eine Platte der Fläche $A$ angibt, welche mit konstanter Geschwindigkeit durch eine Flüssigkeit gezogen wird.
+  Hier bewegen sich die einzelnen Flüssigkeitsschichten nun mit konstanter Geschwindigkeit, sodass die Kräfte im Gleichgewicht sein müssen
+  \begin{align}
+    -2 \pi r L \eta \frac{d v}{d r} &= \pi r^2 \Delta p \nonumber \\
+    \Leftrightarrow \ \frac{d v}{d r} &= \frac{\Delta p}{2 \eta L} \, r
+    \label{eq_theo_hp_force_equilibrium}
+  \end{align}
+  Da die Geschwindigkeit $v(R)$ am Rand des Rohres verschwinden muss, erhält man durch Integration über $r$
+  \begin{align}
+    v(r) = \frac{\Delta p}{4 \eta L} (R^2 - r^2)
+    \label{eq_theo_hp_velocity}
+  \end{align}
+  Womit man zuletzt den Volumenstrom durch Integration über die Querschnittsfläche des Rohres erhält
+  \begin{align}
+    \frac{d V}{d t} = \int_A v(r) \, d A = 2 \pi \int_0^R r v(r) \, dr
+    = \frac{\pi R^4 \Delta p}{8 \eta L}
+    \label{eq_theo_hp_hagen_poiseuille}
+  \end{align}
+  Dies ist das Gesetz von Hagen-Poiseuille.
+
+  \subsubsection{Die Reynoldszahl}
+  Die obigen Formeln gelten alle nur unter der Annahme einer laminaren Strömung bei der die einzelnen Flüssigkeitsschichten aneinander vorbeigleiten ohne sich zu vermischen. Im Allgemeinen kann es aber bei hohen Geschwindigkeiten oder bestimmten Geometrien umströmter Körper auch zu turbulenten Strömungen kommen, wo obiges die Gültigkeit verliert.
+  Eine Quantisierung dessen, ob sich eine Flüsigkeit laminar oder turbulent verhält ist mit der semiempirischen Reynoldszahl
+  \begin{align}
+    \text{Re} = \frac{2 E_\text{kin}}{W_\text{fric}}
+  \end{align}
+  möglich, wobei $E_\text{kin}$ die kinetische Energie eines Volumenelements der Flüssigkeit und $W_\text{fric}$ die Reibungsverluste beschreibt.
+  Der Übergangspunkt zwischen laminarer und turbulenter Strömung kann damit nun durch eine kritische Reynoldszahl $\text{Re}_\text{crit}$ angegeben werden.
+  Die Reynoldszahl lässt sich außerdem noch mithilfe einer charakteristischen Länge $L$, welche die Geometrie des Systems beschreibt, wie folgt darstellen
+  \begin{align}
+    \text{Re} = \frac{\varrho v L}{\eta}
+  \end{align}
+  wobei $v$ die mittlere Strömungsgeschwindigkeit, $\varrho$ die Dichte und $\eta$ die Viskosität der Flüssigkeit ist.
+
+  \newpage
+  \section{Auswertung}
+  \subsection{Bestimmung der Viskosität nach Stokes}
+  Zur Bestimmung der Viskosität wird hier (\ref{eq_theo_stokes_viscosity}) verwendet.
+  Dazu wird zunächst die mittlere Geschwindigkeit $v$ der jeweiligen Kugeln gleichen Durchmessers benötigt.
+  Diese erhält man aus den mittleren Streckenzeiten $t$ der Kugeln gleichen Durchmessers sowie der Strecke $s$ (bei der Mittelung der Zeiten werden die Fehler der einzelnen Zeiten quadratisch addiert um das Quadrat des Gesamtfehlers zu erhalten).
+  Mit diesen Werten erhält man für die Geschwindigkeit $v$ Folgendes
+  \begin{align}
+    v &= \frac{s}{t} \nonumber \\
+    \Rightarrow \ \Delta v &= v \sqrt{\left(\frac{\Delta t}{t}\right)^2 + \left(\frac{\Delta s}{s}\right)^2}
+  \end{align}
+  Es wird zunächst $\frac{v}{\varrho_K - \varrho_{PEG}}$ in Abhängigkeit von $r^2$, also dem Quadrat des Kugelradius aufgetragen (siehe blauer Graph in Abbildung \ref{fig_stokes_viscosity_regression}), wobei $\varrho_{PEG}$ bei der gemessenen Temperatur von $T = (24.45 \pm 0.05) \, ^\circ$C einen Wert von $\varrho_{PEG} = (1.1451 \pm 0.0004) \frac{\text{g}}{\text{cm}^3}$ besitzt (siehe Graph im Skript). Des Weiteren erhält man den Wert von $\varrho_K$ durch Mittelwertbildung der Grenzen des angegebenen Wertebereichs, während man den Fehler durch Bildung der halben Differenz zwischen beiden Bereichsgrenzen erhält.
+
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig1.pgf}
+    }
+    \caption{Bestimmung der Viskosität von PEG durch lineare Regression der Geschwindigkeit $v$ geteilt durch die Differenz der Kugel- und PEG-Dichte in Abhängigkeit des Kugelradiusquadrats $r^2$. Dabei ist der blaue Graph ohne und der orangene mit Ladenburg'scher Korrektur}
+    \label{fig_stokes_viscosity_regression}
+  \end{figure}
+
+  Dabei ist
+  \begin{align}
+    \Delta \left(\frac{v}{\varrho_K - \varrho_{PEG}} \right) &= \frac{v}{\varrho_K - \varrho_{PEG}} \sqrt{\left(\frac{\Delta v}{v} \right)^2 + \frac{\Delta \varrho_K^2 + \Delta \varrho_{PEG}^2}{(\varrho_K - \varrho_{PEG})^2}} \nonumber \\
+    \nonumber \\
+    \Delta (r^2) &= 2 r \Delta r
+  \end{align}
+  Man sieht nun, dass der blaue Graph in Abbildung \ref{fig_stokes_viscosity_regression} keinen linearen Zusammenhang beschreibt, bzw. deutlich von einem solchen abweicht.
+  Dies liegt daran das das Stokes'sche Gesetz nur für unendlich ausgedehnte Flüssigkeiten gültig ist und das PEG hier durch den endlichen Rohrradius $R$ beschränkt ist.
+  Somit wurde die Geschwindigkeit mit wachsendem Kugelradius systematisch zu klein gemessen, was mit der Ladenburg'schen Korrektur $\lambda = (1 + 2.1 \frac{r}{R})$ in (\ref{eq_theo_stokes_friction}) korrigiert werden kann
+  \begin{align}
+    F_R = 6 \pi \eta r v \lambda
+  \end{align}
+  Somit können hier einfach die Sinkgeschwindigkeiten $v$ mit $\lambda$ multipliziert werden um diesen Fehler zu korrigieren. Dabei erhält man folgende Werte
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $r$ / mm & $\lambda$ & $v$ / (mm / s) & $v_\text{corr}$ / (mm / s) & Abw. $v, v_\text{corr}$ \\
+      \hline
+      4.500 ± 0.023 &  1.2520 ± 0.0012  &  34.6 ± 0.4   &   43.3 ± 1.3    &     7$\sigma$ \\
+      3.572 ± 0.018 &  1.2000 ± 0.0010  & 25.14 ± 0.19  &   30.2 ± 1.0    &     5$\sigma$ \\
+      4.000 ± 0.020 &  1.2240 ± 0.0011  & 27.57 ± 0.23  &   33.7 ± 1.1    &     6$\sigma$ \\
+      3.000 ± 0.015 &  1.1680 ± 0.0008  & 18.83 ± 0.20  &   22.0 ± 0.8    &   3.7$\sigma$ \\
+      2.500 ± 0.013 &  1.1400 ± 0.0007  & 13.75 ± 0.11  &   15.7 ± 0.7    &   2.8$\sigma$ \\
+      2.000 ± 0.010 &  1.1120 ± 0.0005  &  9.08 ± 0.05  &   10.1 ± 0.5    &   1.9$\sigma$ \\
+      1.500 ± 0.008 &  1.0840 ± 0.0004  &  5.34 ± 0.04  &    5.8 ± 0.4    &   1.1$\sigma$ \\
+      1.000 ± 0.005 & 1.05600 ± 0.00027 & 2.725 ± 0.011 &   2.88 ± 0.27   &   0.6$\sigma$ \\
+      0.750 ± 0.004 & 1.04200 ± 0.00020 & 1.783 ± 0.007 &   1.86 ± 0.20   &   0.4$\sigma$
+    \end{tabular}
+    \captionof{table}{Korrekturfaktor $\lambda$, Sinkgeschwindigkeit $v$ und korrigierte Sinkgeschwindigkeit $v_\text{corr} = \lambda v$ für den jeweiligen Kugelradius. Die Abweichung von $v$ und $v_\text{corr}$ ist ebenfalls angegeben.}
+    \label{table_v_correction}
+  \end{center}
+  Man sieht in Tabelle \ref{table_v_correction} das die korrigierte Geschwindigkeit für die letzten paar Werte kaum noch von der ursprünglichen Geschwindigkeit abweicht, der Fehler aber durch die Korrektur stark angehoben wird.
+  Somit ist es besser nur die Werte mit $1.5\sigma$ oder höher (alles was stark über $1\sigma$ liegt) zu korrigieren. Dadurch erhält man den orangenen Graphen in Abbildung \ref{fig_stokes_viscosity_regression}. Die lineare Regression dieses Graphen liefert die folgende Steigung
+  \begin{align}
+    s = (102 \pm 5) \, \frac{\text{cm}^2}{\text{g}}
+  \end{align}
+  Damit erhält man nun nach (\ref{eq_theo_stokes_viscosity})
+  \begin{align}
+    \eta &= \frac{2 g}{9 s} \nonumber \\
+    \Delta \eta &= \eta \sqrt{\left(\frac{\Delta g}{g}\right)^2 + \left(\frac{\Delta s}{s}\right)^2}
+  \end{align}
+  Dabei ist $g = (9.80984 \pm 0.00002) \, \frac{\text{m}}{\text{s}^2}$ die Erdbeschleunigung in Heidelberg (siehe Skript zum PAP 1). Einsetzen liefert folgenden Wert für $\eta$
+  \begin{align}
+    \eta = (214 \pm 11) \, \text{mPa s}
+  \end{align}
+
+  \subsection{Bestimmung der kritischen Reynoldszahl}
+  Zur Bestimmung der kritischen Reynoldszahl werden die \glqq theoretischen\grqq{} Sinkgeschwindigkeiten aus der Viskosität über (\ref{eq_theo_stokes_viscosity}) bestimmt
+  \begin{align}
+    v_\text{theo} &= \frac{2}{9} \, g \, \frac{\varrho_K - \varrho_\text{PEG}}{\eta} \, r^2 \nonumber \\
+    \Delta v_\text{theo} &= v_\text{theo} \sqrt{\left(\frac{\Delta g}{g}\right)^2 + \frac{\Delta\varrho_K^2 + \Delta\varrho_\text{PEG}^2}{(\varrho_K - \varrho_\text{PEG})^2} + \left(\frac{\Delta\eta}{\eta}\right)^2 + \left(\frac{\Delta (r^2)}{r^2}\right)^2}
+  \end{align}
+  sowie die Reynoldszahlen für die jeweiligen Kugelarten
+  \begin{align}
+    \text{Re} &= \frac{\rho_\text{PEG} v R}{\eta} \nonumber \\
+    \Delta \text{Re} &= \text{Re} \sqrt{\left(\frac{\Delta \varrho_\text{PEG}}{\varrho_\text{PEG}}\right)^2 + \left(\frac{\Delta v}{v}\right)^2 + \left(\frac{\Delta\eta}{\eta}\right)^2}
+  \end{align}
+  Damit und mit
+  \begin{align}
+    \Delta \left(\frac{v}{v_\text{theo}} \right) = \frac{v}{v_\text{theo}} \sqrt{\left(\frac{\Delta v}{v}\right)^2 + \left(\frac{\Delta v_\text{theo}}{v_\text{theo}}\right)^2}
+  \end{align}
+  erhält man folgenden Graphen
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig2.pgf}
+    }
+    \caption{Reynoldszahl Re in Abhängigkeit des Verhältnisses $v / v_\text{theo}$}
+    \label{fig_reynolds}
+  \end{figure}
+  Man erkennt ca. kurz nach $\text{Re} = 3$ einen Knick in der Kurve. Der Fehler wird dabei auf den Abstand der Messwerte abgeschätzt, also auf ungefähr $1$. Damit ergibt sich die kritische Reynoldszahl als
+  \begin{align}
+    \text{Re}_\text{crit} = 3 \pm 1
+  \end{align}
+
+  \subsection{Bestimmung der Viskosität nach Hagen-Poiseuille}
+  Zur Verwendung des Gesetzes von Hagen-Poiseuille (\ref{eq_theo_hp_hagen_poiseuille}) muss zunächst der Volumenstrom ermittelt werden.
+  Dies erfolgt mit den ermittelten Zwischenwerten am besten mithilfe einer linearen Regression des Zusammenhangs
+
+  \begin{align}
+    t = V / J
+    \label{eq_hp_t_V}
+  \end{align}
+
+  Dabei ist $J = \frac{d V}{d t}$ der Volumenstrom. Die Regression ist in Abbildung \ref{fig_hp_volume_flow} dargestellt.
+
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig3.pgf}
+    }
+    \caption{Bestimmung des Volumenstroms durch lineare Regression der Zeit $t$ in Abhängigkeit des ausgeflossenen Volumens $V$.}
+    \label{fig_hp_volume_flow}
+  \end{figure}
+
+  Man erhält den folgenden Wert für die Steigung der Gerade
+
+  \begin{align}
+    s = (24.0 \pm 0.3) \, \frac{\text{s}}{\text{cm}^3}
+  \end{align}
+
+  Daraus ergibt sich mit (\ref{eq_hp_t_V}) der Volumenstrom als
+
+  \begin{align}
+    J &= \frac{1}{s} \nonumber \\
+    \Delta J &= J \, \frac{\Delta s}{s}
+  \end{align}
+
+  bzw. berechnet als
+
+  \begin{align}
+    J = (41.7 \pm 0.5) \, \frac{\text{mm}^3}{\text{s}}
+  \end{align}
+
+  Des Weiteren ist für (\ref{eq_theo_hp_hagen_poiseuille}) noch die Druckdifferenz zu bestimmen.
+  Diese ist die Differenz $p$ zwischen Normaldruck und dem Druck am Boden der Glasröhre, welche sich durch die auf die Flüssigkeit wirkende Gewichtskraft $F_g = \varrho_\text{PEG} V$ und die Querschnittsfläche des Glasrohres ergibt als $p = \frac{F_g}{A}$ bzw.
+
+  \begin{align}
+    p &= h \, \varrho_\text{PEG} \, g \nonumber \\
+    \Delta p &= p \sqrt{\left(\frac{\Delta h}{h} \right)^2 + \left(\frac{\Delta \varrho_\text{PEG}}{\varrho_\text{PEG}} \right)^2 + \left(\frac{\Delta g}{g} \right)^2}
+  \end{align}
+
+  oder berechnet als
+  
+  \begin{align}
+    p = (6.12 \pm 0.03) \, \text{kPa}
+  \end{align}
+
+  Mit den gegebenen Werten $2R = (1.500 \pm 0.010) \, \text{mm}$ und $L = (100.0 \pm 0.5) \, \text{mm}$ für Durchmesser und Länge der Kapillare, erhält man schlussendlich mit der Formel
+
+  \begin{align}
+    \eta &= \frac{\pi p R^4}{8 J L} \nonumber \\
+    \Delta \eta &= \eta \sqrt{\left(\frac{\Delta p}{p} \right)^2 + \left(4 \frac{\Delta R}{R} \right)^2 + \left(\frac{\Delta J}{J} \right)^2 + \left(\frac{\Delta L}{L} \right)^2}
+  \end{align}
+
+  den Wert für $\eta$
+
+  \begin{align}
+    \eta = (183 \pm 6) \, \text{mPa s}
+  \end{align}
+
+  \newpage
+  \section{Diskussion}
+  In diesem Versuch wurde die Viskosität von PEG auf zwei verschiedene Arten bestimmt.
+  Zum Einen durch die Messung der Sinkgeschwindigkeiten von Kugeln verschiedener Radien, mithilfe des Stokes'schen Gesetzes und zum Anderen durch die Messung des Volumenstroms einer Kapillare unter Ausnutzung des Gesetzes von Hagen-Poiseuille.
+  Des Weiteren wurde die Gültigkeitsgrenze der hier verwendeten Betrachtungen durch Bestimmung der kritischen Reynoldszahl ermittelt.
+
+  Als wesentliches Ergebnis dieses Versuchs erhält man die nach Stokes bestimmte Viskosität
+  \begin{align}
+    \eta_\text{stokes} = (214 \pm 11) \, \text{mPa s}
+  \end{align}
+  und die nach Hagen-Poiseuille bestimmte Viskosität
+  \begin{align}
+    \eta_\text{hp} = (183 \pm 6) \, \text{mPa s}
+  \end{align}
+  Diese Werte besitzen eine relativ hohe, aber nicht signifikante Abweichung von $2.5\sigma$ voneinander.
+  Die höhe dieser Abweichung könnte durchaus systematischer Natur sein, was sich mit Blick auf Abbildung \ref{fig_stokes_viscosity_regression} auch bestätigt.
+  Man sieht das sich die letzten paar Werte trotz der Korrektur alle etwas unterhalb der Gerade befinden.
+  Hier spielen vermutlich bereits Turbulenzen eine Rolle, da auch aus Abbildung \ref{fig_reynolds} ersichtlich ist, dass sich einige Werte (dies sollten natürlich die Werte mit hoher Geschwindigkeit sein) oberhalb der kritischen Reynoldszahl aufhalten.
+  Des Weiteren könnte auch die Beeinflussung der Kugeln untereinander eine Rolle spielen, da nicht alle Kugeln einzeln gemessen wurden.
+  Dieser Effekt sollte natürlich auch insbesondere bei den Kugeln mit einem hohen Radius größer sein.
+  Zuletzt erhält man ebenfalls ungewünschte Effekte, sollte die Kugel nicht ganz mittig losgelassen worden sein.
+
+  Für die kritische Reynoldszahl wurde außerdem der Wert $\text{Re}_\text{crit} = 3 \pm 1$ ermittelt, welcher zu dem zu erwartenden Wert für eine Kugeln von ca. $\text{Re}_\text{crit} = 1$ eine nicht signifikante Abweichung von $2\sigma$ besitzt. Dieser Wert konnte also experimentell bestätigt werden.
+
+  Des Weiteren konnte man in diesem Experiment an Abbildung \ref{fig_stokes_viscosity_regression} sehen, dass das Stokes'sche Gesetz im Rahmen der Messfehler erfüllt zu sein scheint.
+  Genauso zeigt auch die Übereinstimmung der letztendlich erhaltenen Viskositätswerte, dass die verwendete Theorie konsistent ist, was bei Erfüllung des Stoke'schen Gesetzes auch Rückschlüsse auf das Gesetz von Hagen-Poiseuille zulässt.
+
+
+\end{document}

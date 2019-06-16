@@ -1,0 +1,59 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{pgf}
+
+\begin{document}
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig1.pgf}
+    }
+    \caption{Bestimmung der Viskosität von PEG durch lineare Regression der Geschwindigkeit $v$ geteilt durch die Differenz der Kugel- und PEG-Dichte in Abhängigkeit des Kugelradiusquadrats $r^2$. Dabei ist der blaue Graph ohne und der orangene mit Ladenburg'scher Korrektur}
+    \label{fig_stokes_viscosity_regression}
+  \end{figure}
+
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      $r$ / mm & $\lambda$ & $v$ / (mm / s) & $v_\text{corr}$ / (mm / s) & Abw. $v, v_\text{corr}$ \\
+      \hline
+      4.500 ± 0.023 &  1.2520 ± 0.0012  &  34.6 ± 0.4   &   43.3 ± 1.3    &     7$\sigma$ \\
+      3.572 ± 0.018 &  1.2000 ± 0.0010  & 25.14 ± 0.19  &   30.2 ± 1.0    &     5$\sigma$ \\
+      4.000 ± 0.020 &  1.2240 ± 0.0011  & 27.57 ± 0.23  &   33.7 ± 1.1    &     6$\sigma$ \\
+      3.000 ± 0.015 &  1.1680 ± 0.0008  & 18.83 ± 0.20  &   22.0 ± 0.8    &   3.7$\sigma$ \\
+      2.500 ± 0.013 &  1.1400 ± 0.0007  & 13.75 ± 0.11  &   15.7 ± 0.7    &   2.8$\sigma$ \\
+      2.000 ± 0.010 &  1.1120 ± 0.0005  &  9.08 ± 0.05  &   10.1 ± 0.5    &   1.9$\sigma$ \\
+      1.500 ± 0.008 &  1.0840 ± 0.0004  &  5.34 ± 0.04  &    5.8 ± 0.4    &   1.1$\sigma$ \\
+      1.000 ± 0.005 & 1.05600 ± 0.00027 & 2.725 ± 0.011 &   2.88 ± 0.27   &   0.6$\sigma$ \\
+      0.750 ± 0.004 & 1.04200 ± 0.00020 & 1.783 ± 0.007 &   1.86 ± 0.20   &   0.4$\sigma$
+    \end{tabular}
+    \captionof{table}{Korrekturfaktor $\lambda$, Sinkgeschwindigkeit $v$ und korrigierte Sinkgeschwindigkeit $v_\text{corr} = \lambda v$ für den jeweiligen Kugelradius. Die Abweichung von $v$ und $v_\text{corr}$ ist ebenfalls angegeben.}
+    \label{table_v_correction}
+  \end{center}
+
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig2.pgf}
+    }
+    \caption{Reynoldszahl Re in Abhängigkeit des Verhältnisses $v / v_\text{theo}$}
+    \label{fig_reynolds}
+  \end{figure}
+
+  \begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+      \input{../../figures/viscosity/fig3.pgf}
+    }
+    \caption{Bestimmung des Volumenstroms durch lineare Regression der Zeit $t$ in Abhängigkeit des ausgeflossenen Volumens $V$.}
+    \label{fig_hp_volume_flow}
+  \end{figure}
+\end{document}
