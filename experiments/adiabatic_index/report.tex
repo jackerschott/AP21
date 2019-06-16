@@ -1,0 +1,138 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+
+\author{Jona Ackerschott}
+\title{Messprotokoll}
+\subtitle{Versuch 221 $-$ Adiabatenkoeffizient}
+\date{\today}
+
+\begin{document}
+  \maketitle
+
+  \tableofcontents
+
+  \newpage
+  \section{Einleitung}
+  \subsection{Motivation}
+  In diesem Versuch wird der Adiabatenkoeffizient von Luft und Argon bestimmt.
+  Dazu werden für Luft zwei Methoden, zum Einen nach Clemént und Desormes und zum Anderen nach Rüchardt verwendet, während für Argon nur die zweite Methode verwendet wird.
+  Die Ergebnisse werden innerhalb der Methoden sowie mit den Literaturwerten verglichen.
+
+  \subsection{Messverfahren}
+  Zur Messung der Adiabatenkoeffizienten werden zwei Verfahren verwendet.
+  Bei dem ersten Verfahren nach Clemént und Desormes wird die Änderung des Drucks für verschiedene Zustandsübergänge in einem mit Luft gefüllten Gasbehälter gemessen.
+  Für die Zustandsänderungen werden ein am Gasbehälter befestigter Luftbalg und eine mit einem Stopfen versehene Öffnung verwendet.
+  Der Druck wird mithilfe eines, ebenfalls an den Gasbehälter angeschlossenen Manometers gemessen.
+
+  Zunächst wird nun ein Überdruck im Gasbehälter mithilfe des Luftbalgs erzeugt.
+  Sobald die dabei entstehende Erwärmung des Gases abgeschlossen ist, was man durch eine Konvergenz des Druckmesswerts erkennen kann, kann jener asymptotische Druckwert gemessen werden.
+
+  Als Nächstes wird der Stopfen auf der Öffnung für ca. 2 Sekunden geöffnet, sodass zwischen der Luft innerhalb und außerhalb des Behälters ein adiabatischer Druckausgleich erzielt werden kann. Nach einem erneuten Abwarten des Temperaturausgleichs wird auch in diesem Zustand der Druck gemessen.
+
+  Diese zwei Messungen werden anschließend fünf mal wiederholt.
+
+  Bei dem Verfahren nach Rüchardt wird die Schwingungsfrequenz eines aufgrund des Druckgradienten zwischen Außenluft und Gasdrucks in einem Gasbehälter schwingenden Körpers gemessen.
+  Dafür wird in einem solchen Behälter, gefüllt mit Luft oder Argon, ein Druck von ca. 0.4 bar eingestellt.
+  Der Schwingungskörper (Zylinder) befindet sich in einem Glasrohr mit gleichem Durchmesser, welches mit dem Behälter verbunden ist.
+  Um der Dämpfung der Schwingung entgegenzuwirken, wird zusätzlich eine kleine Öffnung seitlich am Glasrohr angebracht.
+  Dabei wird der Druck so eingestellt das die Schwingung des Körpers symmetrisch zu jener Öffnung erfolgt.
+
+  Mit diesen Einstellungen wird für Luft und für Argon die Zeit von 50 Schwingungen gemessen sowie die Masse des Körpers, das Volumen des Gasbehälters und der Radius des Glasrohres.
+  
+  \subsection{Theoretische Grundlagen}
+  \subsubsection{Verfahren nach Clément und Desormes}
+  Für die Messung des Adiabatenkoeffizienten nach der Methode von Clemént und  Desormes wird der Zustand des zu messenden Gases in einem abgeschlossenen Behälter von einem Anfangszustand $S_1$ über eine adiabatische Zustandsänderung in den Zustand $S_2$ und von dort aus über eine isochore Zustandsänderung in den Zustand $S_3$ gebracht.
+  Der Übergang $S_1 \rightarrow S_2$ erfolgt dabei über einen Druckausgleich mit der Außenluft, während der Übergang $S_2 \rightarrow S_3$ über einen Temperaturausgleich mit der Außenluft stattfindet.
+
+  Angefangen mit $S_1$, besitzt das Gas ein Volumen $V_1$ bei einem Druck von $p_1 = b + \Delta p_1$ und einer Temperatur von $T_1$, wobei $b$ der äußere Luftdruck ist.
+  Bei der adiabatischen Zustandsänderung $S_1 \rightarrow S_2$ sinkt nun der Druck auf $b$, während das Volumen steigt $V_2 = V_1 + \Delta V$ und die Temperatur sinkt $T_2 = T_1 - \Delta T$.
+  Während bei der isochoren Zustandsänderung $S_2 \rightarrow S_3$ am schluss die Temperatur wieder auf Zimmertemperatur $T_1$ ansteigt, bleibt das Volumen gleich $V_3 = V_2$ und dier Druck steigt auf $p_3 = b + \Delta p_3$.
+
+  Da die Zustandsänderung $S_1 \rightarrow S_2$ adiabatisch ist, kann hier die Poisson-Gleichung
+  \begin{align}
+    p_1 V_1^\kappa = p_2 V_2^\kappa
+    \label{eq_theo_poisson}
+  \end{align}
+  angewendet werden.
+  Einsetzen ergibt
+  \begin{align}
+    (b + h_1) V_1^\kappa = b (V_1 + \Delta V)^\kappa
+  \end{align}
+  wobei die Näherung
+  \begin{align}
+    (V_1 + \Delta V)^\kappa = V_1^\kappa \left(1 + \frac{\Delta V}{V_1}\right)^\kappa \approx V_1^\kappa \left(1 + \kappa \frac{\Delta V}{V_1} \right)
+  \end{align}
+  verwendet wird, da $\Delta V \ll V_1$. Somit erhält man
+  \begin{align}
+    \frac{h_1}{b} = \kappa \frac{\Delta V}{V_1}
+    \label{eq_theo_poisson_converted}
+  \end{align}
+
+  Für $S_2 \rightarrow S_3$ kann dagegen das Boyle-Mariott'sche Gesetz verwendet werden um zu sehen, dass
+  \begin{align}
+    p_1 V_1 = p_3 V_3
+    \label{eq_theo_boyle_mariott}
+  \end{align}
+  Einsetzen und Vernachlässigen von Termen zweiter Ordnung bei Berücksichtigung von $\Delta p_3 \ll b$ und $\Delta V \ll V_1$ ergibt
+  \begin{align}
+    &h_1 V_1 = h_3 V_1 + b \Delta V \nonumber \\
+    \nonumber \\
+    \Leftrightarrow \ &\frac{\Delta V}{V_1} = \frac{\Delta p_1 - \Delta p_3}{b}
+    \label{eq_boyle_mariott_converted}
+  \end{align}
+  Einsetzen von (\ref{eq_boyle_mariott_converted}) in (\ref{eq_poisson_converted}) ergibt schlussendlich
+  \begin{align}
+    \kappa = \frac{\Delta p_1}{\Delta p_1 - \Delta p_3}
+    \label{eq_theo_kappa_clement_desormes}
+  \end{align}
+
+  \subsubsection{Verfahren nach Rüchardt}
+  Bei dem Messverfahren nach Rüchardt wird der Adiabatenkoeffizient aus der Schwingungsfrequenz eines Körpers (Zylinders) bestimmt, der in einem Glasrohr oberhalb eines Gasbehälters auf und ab schwingt.
+  Dabei besitzt der Körper den gleichen Druchmesser wie das Glasrohr.
+  Bei einer Bewegung des Schwingkörpers findet in der Flasche eine Druckänderung $\Delta p$ statt, was bei einer Querschnittsfläche $A$ des Körpers zu einer Kraft $A \Delta p$ auf den Körper führt.
+  Somit gilt nach dem Newton'schen Gesetz
+  \begin{align}
+    m \frac{d^2x}{d t^2} = A \, \Delta p
+    \label{eq_theo_newton}
+  \end{align}
+  Weiter ist $p V^\kappa$ nach dem Poisson'schen Gesetz konstant, da der Vorgang adiabatisch ist.
+  Dies liefert
+  \begin{align}
+    &d (p \, V^\kappa) = 0 \nonumber \\
+    \Leftrightarrow \ & V^\kappa \, dp + \kappa \, p \, V^{\kappa - 1} \, dV = 0 \nonumber \\
+    \Leftrightarrow \ & dp = -\kappa \, \frac{p}{V} \, dV
+  \end{align}
+  Die hier vorliegende Volumenänderung $\Delta V = A x = \pi r^2 x$ ist klein gegenüber dem Gesamtvolumen $V$, sodass näherungsweise
+  \begin{align}
+    \Delta p = -\pi^2 \, r^4 \, \kappa \, \frac{p}{V} \, x
+  \end{align}
+  gilt und mit \ref{eq_theo_newton} folgt
+  \begin{align}
+    \ddot{x} + \frac{\pi^2 \, r^4 \, \kappa \, p}{m \, V} \, x = 0
+  \end{align}
+  Dies ist die Bewegungsgleichung eines harmonischen Oszillators mit der Frequenz
+  \begin{align}
+    \omega = \sqrt{\frac{\pi^2 \, r^4 \, \kappa \, p}{m \, V}}
+  \end{align}
+  Mit $\omega = 2 \pi / T$ folgt daraus
+  \begin{align}
+    \kappa = \frac{4 \, m \, V}{r^4 \, T^2 \, p}
+    \label{eq_theo_kappa_ruechardt}
+  \end{align}
+  
+  \newpage
+  \section{Auswertung}
+  
+
+\end{document}
