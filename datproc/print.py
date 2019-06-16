@@ -13,13 +13,17 @@ def sigval(val, err, fix_mul3=True, fix_exp=None, manual_digits=3):
     raise ValueError
 
   def exp10(x):
-    return int(np.floor(np.log10(abs(x))))
+    if x == 0.0:
+      return 0
+    else:
+      return int(np.floor(np.log10(abs(x))))
   def sig_digit(x, e):
     return int(x // (10**e))
 
   val_exp = exp10(val)
-
-  if fix_mul3:
+  if fix_exp != None:
+    exp_fix = fix_exp
+  elif fix_mul3:
     exp_fix = 3 * (val_exp // 3)
   else:
     exp_fix = val_exp
@@ -141,7 +145,7 @@ def lst(val, err=[], name='', unit='', prefix=True, expToFix=None):
   if expToFix == None or prefix:
     exps = np.zeros(N)
     for i in range(N):
-      _, _, exps[i] = sigval(val[i], err[i], True)
+      _, _, exps[i] = sigval(val[i], err[i], fix_mul3=True)
     exps, counts = np.unique(exps, return_counts=True)
     lstExp = int(exps[np.argmax(counts)])
 
@@ -149,7 +153,7 @@ def lst(val, err=[], name='', unit='', prefix=True, expToFix=None):
   valmaxlen = 0
   errmaxlen = 0
   for i in range(N):
-    tmp = sigval(val[i], err[i], True, lstExp)
+    tmp = sigval(val[i], err[i], fix_mul3=True, fix_exp=lstExp)
     if (len(tmp[0]) > valmaxlen):
       valmaxlen = len(tmp[0])
     if (len(tmp[1]) > errmaxlen):
@@ -183,7 +187,7 @@ def lst(val, err=[], name='', unit='', prefix=True, expToFix=None):
 
   # Write and adjust value error strings to out
   for i in range(len(val)):
-    tmp = sigval(val[i], err[i], True, lstExp)
+    tmp = sigval(val[i], err[i], fix_mul3=True, fix_exp=lstExp)
     entry = tmp[0].rjust(valmaxlen)
     if (tmp[1] != ''):
       entry += ' ± ' + tmp[1].ljust(errmaxlen)
