@@ -9,8 +9,51 @@ doubleFrameChars = ['║', '═', '╬', '╔', '╗', '╚', '╝', '╠', '╦
 tableChars = singleFrameChars
 
 def sigval(val, err, fix_mul3=True, fix_exp=None, manual_digits=3):
+  """
+  Converts a value and its error to the appropriate significant digits.
+  Moreover the exponent of the two values gets returned as one mutual exponent string respecting the chosen convention.
+
+  Parameters
+  ----------
+
+  val: float
+    The value to convert
+  err: float
+    The uncertainty of val, must be non-negative
+  fix_mul3: bool
+    If True fixes the exponent to a multiple of 3
+  fix_exp: int
+    If specified fixes the exponent string to that value
+  manual_digits: int
+    If specified sets the digits of val and err, if they have to be set manually
+
+  Returns
+  -------
+
+  valstr: string
+    Formatted string of value respecting the uncertainty
+  errstr: string
+    Formatted string of the uncertainty
+  expstr: string
+    Formatted string of the exponent
+  
+  """
+  
+  if not isinstance(val, float) and not isinstance(val, int):
+    raise TypeError('type of val must be a number.')
+  if not isinstance(err, float) and not isinstance(err, int):
+    raise TypeError('type of err must be a number.')
+  if not isinstance(fix_mul3, bool):
+    raise TypeError('type of fix_mul3 be bool.')
+  if not fix_exp is None and not isinstance(fix_exp, int):
+    raise TypeError('type of fix_exp must be int.')
+  if not isinstance(manual_digits, int):
+    raise TypeError('type of manual_digits must be int.')
+  
   if err < 0.0:
-    raise ValueError
+    raise TypeError('err must be non-negative.')
+  if manual_digits < 0:
+    raise TypeError('manual_digits must be non-negative.')
 
   def exp10(x):
     if x == 0.0:
@@ -59,24 +102,32 @@ def sigval(val, err, fix_mul3=True, fix_exp=None, manual_digits=3):
     exp_str = '{:d}'.format(exp_fix)
     return val_str, err_str, exp_str
 
-def val(name, val, err=0.0, syserr=0.0, unit='', prefix=True):
+def val(val, err=0.0, syserr=0.0, name='', unit='', prefix=True, exp_to_fix=None):
   """
+  Returns the scientific format 'name = (val ± err)e+exp' of the given defective value.
+
   Parameters
+  ----------
 
   val: float
-  err: float, uncertainty of val
-  name: string, name of val
-  ----------
-  Returns
+    Value to format
+  err: float
+    Uncertainty of the value
+  name: string
+    Name of the value
 
-  string, format: "name = val ± err" with two significant digits
+  Returns
+  -------
+
+  valstr: string
+    'name = (val ± err)e+exp' with the appropriate significant digits
   """
 
   if syserr != 0.0 and err == 0.0:
-    raise ValueError('If syserr is specified one must also specify err')
+    raise TypeError('If syserr is specified one must also specify err')
 
   if err < 0.0:
-    raise ValueError('The Uncertainty must be greater than zero')
+    raise TypeError('The Uncertainty must be greater than zero')
 
   if abs(val) < err:
     print('Warning: The Uncertainty is greater than the value itself.')
@@ -88,15 +139,15 @@ def val(name, val, err=0.0, syserr=0.0, unit='', prefix=True):
   syserrstr = None
   if syserr != 0.0:
     if syserr > err:
-      valstr, syserrstr, expstr = sigval(val, syserr, unit != '' and prefix)
+      valstr, syserrstr, expstr = sigval(val, syserr, unit != '' and prefix, exp_to_fix)
       exp = int(expstr)
       _, errstr, _ = sigval(val, err, True, exp)
     else:
-      valstr, errstr, expstr = sigval(val, err, unit != '' and prefix)
+      valstr, errstr, expstr = sigval(val, err, unit != '' and prefix, exp_to_fix)
       exp = int(expstr)
       _, syserrstr, _ = sigval(val, syserr, True, exp)
   else:
-    valstr, errstr, expstr = sigval(val, err, unit != '' and prefix)
+    valstr, errstr, expstr = sigval(val, err, unit != '' and prefix, exp_to_fix)
 
   if err != 0.0 and (expstr[0] != '0' or unit != ''):
     out += '('
@@ -123,7 +174,7 @@ def val(name, val, err=0.0, syserr=0.0, unit='', prefix=True):
 
   return out
 
-def lst(val, err=[], name='', unit='', prefix=True, expToFix=None):
+def lst(val, err=[], name='', unit='', prefix=True, exp_to_fix=None):
   """
   Parameters
 
@@ -141,8 +192,8 @@ def lst(val, err=[], name='', unit='', prefix=True, expToFix=None):
 
   # Use most frequent exponent (multiple of 3)
   N = len(val)
-  lstExp = expToFix
-  if expToFix == None or prefix:
+  lstExp = exp_to_fix
+  if exp_to_fix == None or prefix:
     exps = np.zeros(N)
     for i in range(N):
       _, _, exps[i] = sigval(val[i], err[i], fix_mul3=True)
@@ -253,10 +304,6 @@ def tbl(lists, name='', endl=True):
   if (name != ''):
     out += '\n' + name
   return out + ('\n' if endl else '')
-
-def sig(name, val1, err1, val2, err2=0.0, perc=False):
-  ### deprecated, use dev instead
-  return dev(val1,err1,val2,err2,name=name,perc=perc)
 
 def dev(val1, err1, val2, err2=0.0, name='', perc=False):
   # Returns deviation string
