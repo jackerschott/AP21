@@ -1,5 +1,7 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import sqrt
+import os
 import scipy.constants as cs
 
 import datproc.print as dpr
@@ -72,41 +74,63 @@ v_rho_ratio = v / (rho_K - rho_peg)
 d_v_rho_ratio = v_rho_ratio * sqrt((d_v / v)**2 + (d_rho_K**2 + d_rho_peg**2) / (rho_K - rho_peg)**2)
 
 if output:
-  dp.initplot(num=1, xlabel=r'$r^2$ / mm$^2$', ylabel=r'$\frac{v}{\varrho_K - \varrho_\textnormal{PEG}} / \frac{\textnormal{cm}^4}{\textnormal{g} \, \textnormal{s}}$')
-  dp.plotdata(r2, v_rho_ratio, d_v_rho_ratio, d_r2, x_unit=(cs.milli**2), y_unit=(cs.centi**4 / cs.gram))
+  plt.subplots(num=1)
+  plt.xlabel(r'$r^2$ / mm$^2$')
+  plt.ylabel(r'$\frac{v}{\varrho_K - \varrho_\textnormal{PEG}} / \frac{\textnormal{cm}^4}{\textnormal{g} \, \textnormal{s}}$')
+  plt.errorbar(*dp.to_units(r2, v_rho_ratio, d_v_rho_ratio, d_r2, x_unit=cs.milli**2, y_unit=(cs.centi**4 / cs.gram)), fmt='o')
 
 v[:7] = v_c[:7]
 d_v[:7] = d_v_c[:7]
 v_rho_ratio = v / (rho_K - rho_peg)
 d_v_rho_ratio = v_rho_ratio * sqrt((d_v / v)**2 + (d_rho_K**2 + d_rho_peg**2) / (rho_K - rho_peg)**2)
-slope1, d_slope1, itc1, d_itc1 = dp.linreg(r2, v_rho_ratio, d_v_rho_ratio, d_r2, x_unit=(cs.milli**2), y_unit=(cs.centi**4 / cs.gram), plot=output)
+slope1, d_slope1, itc1, d_itc1 = dp.linreg(r2, v_rho_ratio, d_v_rho_ratio, d_r2)
 
 if output:
-  print(dpr.val('slope1', slope1 / (cs.centi**2 / cs.gram), d_slope1 / (cs.centi**2 / cs.gram), unit='cm^2 / g', prefix=False))
+  lines, *_ = plt.errorbar(*dp.to_units(r2, v_rho_ratio, d_v_rho_ratio, d_r2, x_unit=cs.milli**2, y_unit=(cs.centi**4 / cs.gram)), fmt='o')
+
+  x_line = dp.x_fit_like(r2)
+  y_line, y_uline = dp.linreg_lines(x_line, slope1, d_slope1, itc1, d_itc1)
+  plt.plot(*dp.to_units(x_line, y_line, x_unit=(cs.milli**2), y_unit=(cs.centi**4 / cs.gram)),
+    label='Fit', color=lines.get_color())
+  plt.plot(*dp.to_units(x_line, y_uline, x_unit=(cs.milli**2), y_unit=(cs.centi**4 / cs.gram)),
+    label='Fit uncertainty', color=lines.get_color(), ls='dashed')
+  plt.legend()
+
+if output:
+  print(dpr.val(slope1 / (cs.centi**2 / cs.gram), d_slope1 / (cs.centi**2 / cs.gram),
+    name='slope1', unit='cm^2 / g', prefix=False))
   print()
 
 eta = 2 / 9 * g / slope1
 d_eta = eta * sqrt((d_g / g)**2 + (d_slope1 / slope1)**2)
 
 if output:
-  print(dpr.val('η', eta, d_eta, unit='Pa s'))
+  print(dpr.val(eta, d_eta, name='η', unit='Pa s'))
 
 v_theo = 2/9 * g * (rho_K - rho_peg) * r2 / eta
 d_v_theo = v_theo * sqrt((d_g / g)**2 + (d_rho_K**2 + d_rho_peg**2) / (rho_K - rho_peg)**2 + (d_r2 / r2)**2 + (d_eta / eta)**2)
 v__v_theo = v / v_theo
 d_v__v_theo = v__v_theo * sqrt((d_v / v)**2 + (d_v_theo / v_theo)**2)
 
-# if output:
-#   test = v_theo / (rho_K - rho_peg)
-#   d_test = test * sqrt((d_v_theo / v_theo)**2 + (d_rho_K**2 + d_rho_peg**2) / (rho_K - rho_peg)**2)
-#   dp.plotdata(r2, test, d_test, d_r2, x_unit=(cs.milli**2), y_unit=(cs.centi**4 / cs.gram))
-
 Re = rho_peg * v * R / eta
 d_Re = Re * sqrt((d_rho_peg / rho_peg)**2 + (d_v / v)**2 + (d_eta / eta)**2)
 
 if output:
-  dp.initplot(num=2, xlabel=r'$v / v_\textnormal{theo}$', ylabel=r'Re', scale='linlog')
-  dp.plotdata(v__v_theo, Re, d_Re, d_v__v_theo)
+  plt.subplots(num=2)
+  plt.xlabel(r'$v / v_\textnormal{theo}$')
+  plt.ylabel(r'Re')
+  plt.yscale('log')
+  plt.errorbar(v__v_theo, Re, d_Re, d_v__v_theo, fmt='o')
 
-  dp.savefigs('figures/viscosity', format='pgf')
-  dp.savefigs('figures/viscosity', format='pdf')
+if output:
+  fig_folder_path = 'figures/viscosity'
+  if not os.path.exists(fig_folder_path):
+    os.makedirs(fig_folder_path)
+  
+  fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pgf')
+  for i, path in zip(plt.get_fignums(), fig_paths):
+    plt.figure(i).savefig(path, bbox_inches='tight', pad_inches=0.0)
+  
+  fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pdf')
+  for i, path in zip(plt.get_fignums(), fig_paths):
+    plt.figure(i).savefig(path, bbox_inches='tight', pad_inches=0.2)
