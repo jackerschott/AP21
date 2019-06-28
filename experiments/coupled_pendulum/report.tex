@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{caption}
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage[hidelinks]{hyperref}
 
 \setlength\parindent{0pt}
 \numberwithin{equation}{section}
@@ -24,9 +25,9 @@
 
   \section{Einleitung}
   \subsection{Motivation}
-  In diesem Versuch wird die charakteristischen Frequenzen verschiedener Schwingungsformen zweier, durch eine Feder gekoppelter Pendel gemessen.
+  In diesem Versuch werden die charakteristischen Frequenzen verschiedener Schwingungsformen zweier, durch eine Feder gekoppelter Pendel gemessen.
   Die vermessenen Schwingungsformen sind hier die symmetrische, asymmetrische und die Schwebungsschwingung.
-  Die Messung erfolgt zum Einen über die Bestimmung der Periodendauer, sowie über die Vermessung der Peaks im Frequenzspektrum, für verschiedene Kopplungsgrade der Feder.
+  Die Messung erfolgt zum Einen über die Bestimmung der Periodendauer sowie über die Vermessung der Peaks im Frequenzspektrum für verschiedene Kopplungsgrade der Feder.
   Sowohl die Frequenzen als auch die noch aus diesen Frequenzen bestimmten Kopplungsgrade werden mit der Theorie verglichen.
 
   \subsection{Messverfahren}
@@ -42,9 +43,9 @@
   Begonnen wird mit einer Messung der Periodendauern der beiden Pendel ohne Kopplung.
   Dafür wird nur die erste Messmethode verwendet.
 
-  Anschließend wird eine symmetrische und asymmetrische Schwingung sowie eine Schwebungsschwingungq angeregt und jeweils die Frequenz der Schwingung gemessen.
+  Anschließend wird eine symmetrische und asymmetrische Schwingung sowie eine Schwebungsschwingung angeregt und jeweils die Frequenz der Schwingung gemessen.
   Die Anregung erfolgt zunächst bei der symmetrischen Schwingung, indem beide Pendel ruhend mit gleichem Anfangswinkel losgelassen werden.
-  Bei der asymmetrischen Schwingung erfolgt dies äuqivalent, nur das hier die Anfangswinkel genau entgegengesetzt sein müssen, bzw. ein unterschiedliches Vorzeichen besitzen.
+  Bei der asymmetrischen Schwingung erfolgt dies äquivalent, nur das hier die Anfangswinkel genau entgegengesetzt sein müssen, bzw. ein unterschiedliches Vorzeichen besitzen.
   Bei der Schwebungsschwingung verharrt das eine Pendel in der Ruhelage, während das andere Pendel ohne Anfangsgeschwindigkeit bei einer gewissen Anfangsauslenkung losgelassen wird.
   Die eigentliche Messung wird nun für alle Schwingungsformen bei ca. 190, 290 und 390 mm Abstand der Federaufhängung von der Pendelachse durchgeführt.
   Dies entspricht drei verschiedenen Kopplungsgraden.
@@ -55,7 +56,7 @@
 
   \subsection{Theoretische Grundlagen}
   Zur Aufstellung der Bewegungsgleichung für das gekoppelte Pendel wird zunächst die Differentialgleichung eines ungekoppelten Pendels betrachtet.
-  Es gilt die Beziehung $L = I \omega$ zwischen Drehimpuls $L$ und Kreisfrequenz $\omega = \dot{\varphi}$ mit Trägheitsmoment $I$, woraus folgt $\Rightarrow M = \dot{L} = I \ddot{\varphi}$, während das Drehmoment $M$ außerdem für kleine Winkel mit dem Direktionsmoment $D$ über $M = -D \varphi$ mit $\varphi$ verknüpft ist.
+  Es gilt die Beziehung $L = I \omega$ zwischen Drehimpuls $L$ und Kreisfrequenz $\omega = \dot{\varphi}$ mit Trägheitsmoment $I$, woraus $M = \dot{L} = I \ddot{\varphi}$ folgt, während das Drehmoment $M$ außerdem für kleine Winkel mit dem Direktionsmoment $D$ über $M = -D \varphi$ mit $\varphi$ verknüpft ist.
   Somit erhält man folgende Bewegungsgleichung für das ungekoppelte Pendel
   \begin{align}
     I \ddot{\varphi} = -D \varphi
@@ -113,7 +114,12 @@
 
 
   \section{Auswertung}
-  Zur Auswertung verwendeter Python Code ist unter folgender Url einzusehen: \texttt{http}
+  Zur Auswertung verwendeter Python Code ist unter folgender Url einzusehen:
+  \begin{center}
+    \small
+    \href{https://github.com/jackerschott/AP21/tree/master/experiments/coupled_pendulum}{https://github.com/jackerschott/AP21/tree/master/experiments/coupled\_pendulum}
+  \end{center}
+
   \subsection{Frequenz der Schwingung ohne Kopplung}
   \label{sec_no_coupling}
   Die Kreisfrequenz der reinen Schwingung ohne Kopplung, wird über die gemessenen Anfangs- und Endzeitpunkte von 10 Perioden bestimmt (Messdaten, Tabelle 1).
