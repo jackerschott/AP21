@@ -21,10 +21,10 @@ omega = 2 * pi * f
 d_omega = 2 * pi * d_f
 
 ## Evaluation
-def exp_fit(x, lda, A):
-  return A * exp(lda * x)
+def omega_fit(t, delta, omega_0):
+  return omega_0 * exp(-delta * t)
 
-popt, pcov = curve_fit(exp_fit, t, omega, p0=(-1/1000, 80), sigma=d_omega)
+popt, pcov = curve_fit(omega_fit, t, omega, p0=(1/1000, 80), sigma=d_omega)
 if output:
   plt.subplots(num=1)
   plt.xlabel(r'$t$ / s')
@@ -33,10 +33,10 @@ if output:
   lines, *_ = plt.errorbar(t, omega, d_omega, fmt='o')
 
   x_fit = dp.x_fit_like(t)
-  y_fit = exp_fit(x_fit, *popt)
+  y_fit = omega_fit(x_fit, *popt)
   plt.plot(x_fit, y_fit, color=lines.get_color())
 
-delta, *_ = -popt
+delta, *_ = popt
 d_delta = sqrt(pcov[0, 0])
 
 t_h = log(2) / delta
