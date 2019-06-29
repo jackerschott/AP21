@@ -5,6 +5,7 @@ import scipy.constants as cs
 import os
 
 import datproc.plot as dp
+import datproc.print as dpr
 
 from damping import delta, d_delta, omega_fit
 
@@ -12,6 +13,11 @@ from damping import delta, d_delta, omega_fit
 output = __name__ == '__main__'
 
 ## Data
+g = 9.80984
+d_g = 0.00002
+
+m = np.array([9.85, 9.85, 2 * 9.85, 2 * 9.85]) * cs.gram
+l = np.array([15, 20, 15, 20]) * cs.centi
 f_F = np.array([
   [680.0, 580.0, 375.0, 265.0],
   [675.0, 570.0, 370.0, 260.0],
@@ -53,16 +59,33 @@ if output:
   plt.xlabel(r'$\omega_F$')
   plt.ylabel(r'$T_P$')
 
-s, d_s = np.zeros(len(f_F)), np.zeros(len(f_F))
-b, d_b = np.zeros(len(f_F)), np.zeros(len(f_F))
-for i in range(len(f_F)):
-  s[i], d_s[i], b[i], d_b[i] = dp.linreg(omega_F[i], T_P[i], d_T_P[i], d_omega_F[i])
-  x_fit = dp.x_fit_like(omega_F[i])
-  y_fit, y_u_fit = dp.linreg_lines(x_fit, s[i], d_s[i], b[i], d_b[i])
+s, d_s = np.zeros(len(m)), np.zeros(len(m))
+b, d_b = np.zeros(len(m)), np.zeros(len(m))
+for i in range(len(m)):
+  par = [omega_F[i], T_P[i], d_T_P[i], d_omega_F[i]]
+  for j in range(len(par)):
+    par[j] = np.insert(par[j], 0, 0.0)
+  
+  s[i], d_s[i], b[i], d_b[i] = dp.linreg(*par)
 
-  dataPts, *_ = plt.errorbar(omega_F[i], T_P[i], d_T_P[i], d_omega_F[i], fmt='o')
-  plt.plot(x_fit, y_fit, color=dataPts.get_color())
-  plt.plot(x_fit, y_u_fit, color=dataPts.get_color(), ls='dashed')
+if output:
+  for i in range(len(m)):
+    x_fit = dp.x_fit_like(omega_F[i])
+    y_fit, y_u_fit = dp.linreg_lines(x_fit, s[i], d_s[i], b[i], d_b[i])
+
+    dataPts, *_ = plt.errorbar(omega_F[i], T_P[i], d_T_P[i], d_omega_F[i], fmt='o')
+    plt.plot(x_fit, y_fit, color=dataPts.get_color(), label='Fit')
+    plt.plot(x_fit, y_u_fit, color=dataPts.get_color(), label='Fit uncertainty', ls='dashed')
+    plt.legend()
+
+I_z = m * g * l / (2 * pi) * s
+d_I_z = I_z * d_s / s
+I_z = np.mean(I_z)
+d_I_z = sqrt(np.sum(d_I_z**2)) / len(m)
+
+if output:
+  print(dpr.val(I_z / (cs.gram * cs.centi**2), d_I_z / (cs.gram * cs.centi**2),
+    name='I_z', unit='g cm^2'))
 
 if output:
   fig_folder_path = 'figures/spinning_top'
@@ -75,6 +98,6 @@ if output:
 
   fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pgf')
   for fig_path in fig_paths:
-    plt.savefig(fig_path, bbox_inches='tight', pad_inches=0.6)
+    plt.savefig(fig_path, bbox_inches='tight', pad_inches=0.0)
 
 plt.show()
