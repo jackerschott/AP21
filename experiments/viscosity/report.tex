@@ -9,9 +9,11 @@
 \usepackage{caption}
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
 \usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
 \usepackage{pgf}
 
 \setlength\parindent{0pt}
+\setlength{\footskip}{35pt}
 \numberwithin{equation}{section}
 
 \author{Jona Ackerschott}
@@ -120,6 +122,12 @@
 
   \newpage
   \section{Auswertung}
+  Zur Auswertung verwendeter Python Code ist unter folgender Url einzusehen:
+  \begin{center}
+    \small
+    \href{https://github.com/jackerschott/AP21/tree/master/experiments/viscosity}{https://github.com/jackerschott/AP21/tree/master/experiments/viscosity}
+  \end{center}
+
   \subsection{Bestimmung der Viskosität nach Stokes}
   Zur Bestimmung der Viskosität wird hier (\ref{eq_theo_stokes_viscosity}) verwendet.
   Dazu wird zunächst die mittlere Geschwindigkeit $v$ der jeweiligen Kugeln gleichen Durchmessers benötigt.
@@ -129,11 +137,12 @@
     v &= \frac{s}{t} \nonumber \\
     \Rightarrow \ \Delta v &= v \sqrt{\left(\frac{\Delta t}{t}\right)^2 + \left(\frac{\Delta s}{s}\right)^2}
   \end{align}
-  Es wird zunächst $\frac{v}{\varrho_K - \varrho_{PEG}}$ in Abhängigkeit von $r^2$, also dem Quadrat des Kugelradius aufgetragen (siehe blauer Graph in Abbildung \ref{fig_stokes_viscosity_regression}), wobei $\varrho_{PEG}$ bei der gemessenen Temperatur von $T = (24.45 \pm 0.05) \, ^\circ$C einen Wert von $\varrho_{PEG} = (1.1451 \pm 0.0004) \frac{\text{g}}{\text{cm}^3}$ besitzt (siehe Graph im Skript). Des Weiteren erhält man den Wert von $\varrho_K$ durch Mittelwertbildung der Grenzen des angegebenen Wertebereichs, während man den Fehler durch Bildung der halben Differenz zwischen beiden Bereichsgrenzen erhält.
+  Es wird zunächst $\frac{v}{\varrho_K - \varrho_{PEG}}$ in Abhängigkeit von $r^2$, also dem Quadrat des Kugelradius aufgetragen (siehe blauer Graph in Abbildung \ref{fig_stokes_viscosity_regression}), wobei $\varrho_{PEG}$ bei der gemessenen Temperatur von $T = (24.45 \pm 0.05) \, ^\circ$C einen Wert von $\varrho_{PEG} = (1.1451 \pm 0.0004) \frac{\text{g}}{\text{cm}^3}$ besitzt (siehe Graph im Skript).
+  Des Weiteren erhält man den Wert von $\varrho_K$ durch Mittelwertbildung der Grenzen des angegebenen Wertebereichs, während man den Fehler durch Bildung der halben Differenz zwischen beiden Bereichsgrenzen erhält.
 
   \begin{figure}[h]
     \centering
-    \resizebox{\textwidth}{!}{
+    \resizebox{0.9\textwidth}{!}{
       \input{../../figures/viscosity/fig1.pgf}
     }
     \caption{Bestimmung der Viskosität von PEG durch lineare Regression der Geschwindigkeit $v$ geteilt durch die Differenz der Kugel- und PEG-Dichte in Abhängigkeit des Kugelradiusquadrats $r^2$. Dabei ist der blaue Graph ohne und der orangene mit Ladenburg'scher Korrektur}
@@ -146,14 +155,17 @@
     \nonumber \\
     \Delta (r^2) &= 2 r \Delta r
   \end{align}
-  Man sieht nun, dass der blaue Graph in Abbildung \ref{fig_stokes_viscosity_regression} keinen linearen Zusammenhang beschreibt, bzw. deutlich von einem solchen abweicht.
+  Man sieht nun, dass der blaue Graph in Abbildung \ref{fig_stokes_viscosity_regression} keinen linearen Zusammenhang beschreibt, bzw. deutlich von einem Solchen abweicht.
   Dies liegt daran das das Stokes'sche Gesetz nur für unendlich ausgedehnte Flüssigkeiten gültig ist und das PEG hier durch den endlichen Rohrradius $R$ beschränkt ist.
-  Somit wurde die Geschwindigkeit mit wachsendem Kugelradius systematisch zu klein gemessen, was mit der Ladenburg'schen Korrektur $\lambda = (1 + 2.1 \frac{r}{R})$ in (\ref{eq_theo_stokes_friction}) korrigiert werden kann
+  Somit wurde die Geschwindigkeit mit wachsendem Kugelradius systematisch zu klein gemessen, was mit der Ladenburg'schen Korrektur $\lambda = \left(1 + 2.1 \frac{r}{R}\right)$ in (\ref{eq_theo_stokes_friction}) korrigiert werden kann
   \begin{align}
     F_R = 6 \pi \eta r v \lambda
   \end{align}
-  Somit können hier einfach die Sinkgeschwindigkeiten $v$ mit $\lambda$ multipliziert werden um diesen Fehler zu korrigieren. Dabei erhält man folgende Werte
-  \begin{center}
+  Somit können hier einfach die Sinkgeschwindigkeiten $v$ mit $\lambda$ multipliziert werden um diesen Fehler zu korrigieren.
+  Dabei erhält man folgende Werte
+  
+  \begin{figure}[h]
+    \centering
     \begin{tabular}{c|c|c|c|c}
       $r$ / mm & $\lambda$ & $v$ / (mm / s) & $v_\text{corr}$ / (mm / s) & Abw. $v, v_\text{corr}$ \\
       \hline
@@ -169,7 +181,8 @@
     \end{tabular}
     \captionof{table}{Korrekturfaktor $\lambda$, Sinkgeschwindigkeit $v$ und korrigierte Sinkgeschwindigkeit $v_\text{corr} = \lambda v$ für den jeweiligen Kugelradius. Die Abweichung von $v$ und $v_\text{corr}$ ist ebenfalls angegeben.}
     \label{table_v_correction}
-  \end{center}
+  \end{figure}
+  
   Man sieht in Tabelle \ref{table_v_correction} das die korrigierte Geschwindigkeit für die letzten paar Werte kaum noch von der ursprünglichen Geschwindigkeit abweicht, der Fehler aber durch die Korrektur stark angehoben wird.
   Somit ist es besser nur die Werte mit $1.5\sigma$ oder höher (alles was stark über $1\sigma$ liegt) zu korrigieren. Dadurch erhält man den orangenen Graphen in Abbildung \ref{fig_stokes_viscosity_regression}. Die lineare Regression dieses Graphen liefert die folgende Steigung
   \begin{align}
@@ -201,14 +214,16 @@
     \Delta \left(\frac{v}{v_\text{theo}} \right) = \frac{v}{v_\text{theo}} \sqrt{\left(\frac{\Delta v}{v}\right)^2 + \left(\frac{\Delta v_\text{theo}}{v_\text{theo}}\right)^2}
   \end{align}
   erhält man folgenden Graphen
+  
   \begin{figure}[h]
     \centering
-    \resizebox{\textwidth}{!}{
+    \resizebox{0.9\textwidth}{!}{
       \input{../../figures/viscosity/fig2.pgf}
     }
     \caption{Reynoldszahl Re in Abhängigkeit des Verhältnisses $v / v_\text{theo}$}
     \label{fig_reynolds}
   \end{figure}
+
   Man erkennt ca. kurz nach $\text{Re} = 3$ einen Knick in der Kurve. Der Fehler wird dabei auf den Abstand der Messwerte abgeschätzt, also auf ungefähr $1$. Damit ergibt sich die kritische Reynoldszahl als
   \begin{align}
     \text{Re}_\text{crit} = 3 \pm 1
@@ -216,7 +231,7 @@
 
   \subsection{Bestimmung der Viskosität nach Hagen-Poiseuille}
   Zur Verwendung des Gesetzes von Hagen-Poiseuille (\ref{eq_theo_hp_hagen_poiseuille}) muss zunächst der Volumenstrom ermittelt werden.
-  Dies erfolgt mit den ermittelten Zwischenwerten am besten mithilfe einer linearen Regression des Zusammenhangs
+  Dies erfolgt mit den ermittelten Zwischenwerten am Besten mithilfe einer linearen Regression des Zusammenhangs
 
   \begin{align}
     t = V / J
@@ -227,7 +242,7 @@
 
   \begin{figure}[h]
     \centering
-    \resizebox{\textwidth}{!}{
+    \resizebox{0.9\textwidth}{!}{
       \input{../../figures/viscosity/fig3.pgf}
     }
     \caption{Bestimmung des Volumenstroms durch lineare Regression der Zeit $t$ in Abhängigkeit des ausgeflossenen Volumens $V$.}
