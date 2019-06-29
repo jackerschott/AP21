@@ -64,7 +64,7 @@ def linreg(x, y, dy, dx=None):
   return linreg_iter(x, y, dy_)
 
 def x_fit_like(a, num=1000):
-  return np.linspace(a[0], a[-1], num)
+  return np.linspace(np.min(a), np.max(a), num)
 
 def linreg_lines(x, s, ds, b, db, align='flat'):
   if align != 'flat' and align != 'steep':
