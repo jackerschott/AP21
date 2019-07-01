@@ -7,8 +7,11 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{caption}
+\usepackage{float}
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{pgf}
 
 \setlength\parindent{0pt}
 \numberwithin{equation}{section}
@@ -29,7 +32,244 @@
   Im Zuge dessen werden auch die Hauptträgheitsmomente des Kreisels bestimmt.
 
   \subsection{Messverfahren}
-  Für die Messungen wird eine luftkissengelagerte Stahlkugel verwendet. Die Orientierung dieser kann dabei mithilfe eines daran montierten Aluminiumstabes geändert werden.
+  Für die Messungen wird eine luftkissengelagerte Stahlkugel verwendet. Die Orientierung dieser kann dabei mithilfe eines daran montierten Aluminiumstabes mit Kugellager geändert werden.
+  Durch den Aluminiumstab befindet sich der Schwerpunkt des Kreisels nicht ganz in der Mitte des Kreisels. Dies wird jedoch im Versuch durch eine entsprechende Ausbalancierung des Kreisels kompensiert. Dazu wird eine Scheibe mit aufgedruckten Farbsektoren, welche auch für spätere Messungen benötigt wird, auf der entsprechenden Höhe am Aluminiumstab angebracht.
 
+  Es werden zunächst einige qualitative Beobachtungen durchgeführt.
+  Zuerst wird der Kreisel ausbalanciert und auf einige Umdrehungen pro Sekunde beschleunigt und die Reaktion des Kreisels beobachtet, wenn der Metallring des Kugellagers des Aluminiumstabs etwas zur Seite gedrückt wird.
+
+  Als Nächstes wird dem Stab ein leichter seitlicher Stoß erteilt um eine Nutationsbewegung einzustellen. Für diese Bewegung wird sowohl das Verhalten der Farbsektorenscheibe beobachtet, als auch das Verhalten einer Scheibe, auf der konzentrische, schwarze und weiße, Kreise abgebildet sind.
+
+  Es wird für eine Scheibe mit konzentrischen Kreisen, dessen Zentrum dieses mal allerdings etwas gegen den Mittelpunkt der Scheibe verschoben ist, das Verhalten bei einer Rotationsbewegung ohne Nutation untersucht.
+  Des Weiteren wird für eine solche Scheibe wie oben, ohne verschobenes Zentrum das Verhalten bei Nutation untersucht.
+  Beide Teile werden noch einmal mit einem am Stab angebrachten Zusatzgewicht wiederholt.
+
+  Es wird ohne zusätzliche Farbsektorenscheibe und mit Zusatzgewicht das Verhalten des Kreisels untersucht, wenn dieser in einer nicht vertikalen Stellung losgelassen wird.
+  Dies geschieht für eine Drehung des Kreisels im und gegen den Uhrzeigersinn.
+
+  Nach diesen qualitativen Messungen wird zunächst die Dämpfung des Kreisels quantitativ gemessen.
+  Dazu wird der Kreisel in eine kräftefreie Einstellung gebracht und zwei Zusatzgewichte am Aluminiumstab angebracht ($2 \cdot 9,85$ g).
+  Nach einer Beschleunigung auf ca. 600 - 700 rpm wird dann die Umdrehungsdauer des Kreisels alle 2 min über einen Zeitraum von 12 min gemessen.
+
+  Der Kreisel wird erneut in eine kräftefreie Einstellung gebracht.
+  Es wird ein Zusatzgewicht in 20 cm Abstand zur Kugelmitte angebracht und der Kreisel auf ca. 500 rpm beschleunigt.
+  Unter diesen Einstellungen wird der Aluminiumstab anschließend schräg gestellt und möglichst nutationsfrei unter drei verschiedenen Winkeln gegen die Vertikale losgelassen.
+  Es wird jeweils die Zeit für einen Umlauf der Figurenachse um die Vertikale gemessen bzw. die Präzessionsdauer.
+
+  Analog zu oben wird erneut die Präzessionsdauer gemessen, diesmal allerdings für verschiedene Gewichte ($9.85$ g pro Gewichtsstück), welche den Kreisel belasten.
+  Diese sind: Ein Gewichtsstück bei 15 cm, ein Gewichtsstück bei 20 cm, zwei Gewichtsstücke bei 15 cm, zwei Gewichtsstücke bei 20 cm.
+  Außerdem erfolgt die Messung für jedes Gewichtsstück für vier verschiedene Frequenzen im Bereich 250 - 700 rpm.
+  
+  Weiter wird der Kreisel in eine kräftefreie Einstellung gebracht und durch einen seitlichen Stoß in Nutation versetzt.
+  Es wird die Umlaufrichtung der Drehachse mithilfe der Farbscheibe gemessen. Dazu wird die Reihenfolge der aufretenden Farben beobachtet.
+
+  Über den Farbwechsel wird der Umlauf der Drehachse um die Figurenachse beobachtet.
+  Für 10 verschiedene Frequenzen im Bereich 300 - 600 rpm kann somit die Zeit für 10 Umläufe der momentanen Drehachse um die Figurenachse gemessen werden.
+
+  Als Letztes wird mithilfe des Stroboskops die Nutationsfrequenz $\omega_N$ für verschiedene Frequenzen $\omega_F$ des Umlaufs der Figurenachse gemessen.
+  Dazu wird der Kreisel wie zuvor in eine kräftefreie Einstellung gebracht und in Nutation versetzt.
+  Die Öffnung des Nutationskegels sollte dabei allerdings an der Spitze des Stabes nur ca. 1-2 cm betragen.
+  Es wird nun für das Stroboskop bestimmte Frequenz $\omega_F$ eingestellt und abgewartet bis der Kreisel, welcher auf eine etwas höhere Frequenz eingestellt wurde, diese Frequenz erreicht.
+  Danach wird, ebenfalls mit dem Stroboskop, schnell die Nutationsfrequenz $\omega_N$ gemessen, damit der Fehler aufgrund der Luftreibung nicht zu hoch ist.
+
+  \subsection{Theoretische Grundlagen}
+  Ein, sich um einen festen Punkt drehender, starrer Körper wird als Kreisel bezeichnet. Dieser ist kräftefrei wenn dieser feste Punkt den Schwerpunkt darstellt und wird als schwerer Kreisel bezeichnet, wenn dies nicht der Fall ist.
+  Bei zwei gleichen Hauptträgheitsmomenten handelt es sich um einen symmetrischen Kreisel.
+  Die Symmetrieachse wird dabei als Figurenachse $\vec{F}$ bezeichnet.
+  
+  Die allgemeine Bewegung eines kräftefreien, symmetrischen Kreisels ist die Nutation.
+  Dabei rotiert die Figurenachse $\vec{F}$ mit der Nutationsfrequenz $\omega_N$ um die raumfeste Drehimpulsachse $\vec{L}$, während wiederum die Drehachse $\vec{\omega}$ mit der Frequenz $\omega_F$ um die Figurenachse rotiert.
+
+  Für den kräftefreien Fall soll nun erst einmal eine Beziehung zwischen $\omega_N$ und $\omega_F$ hergeleitet werden.
+  Die gesamte Winkelgeschwindigkeit des Kreisels ergibt sich als eine Überlagerung aus Nutationsfrequenz und Frequenz der Eigenrotation der Figurenachse
+  \begin{align}
+    \vec{\omega} = \vec{\omega}_N + \vec{\omega}_F
+  \end{align}
+  Das Koordinaten sei nach den Hauptträgheitsmomenten des Kreisels ausgerichtet, wobei $I_x = I_y$ und die z-Achse mit der Figurenachse zusammenfällt.
+  Sei außerdem $\vartheta$ der Winkel zwischen $\vec{L}$ und $\vec{F}$, dann gilt $\omega_{F,x} = 0$ und somit
+  \begin{align}
+    \omega_x = \omega_{N,x} = \omega_N \sin(\vartheta)
+  \end{align}
+  Da außerdem $L_x = L \sin(\vartheta)$ und $L_x = I_x \omega_x$, folgt
+  \begin{align}
+    L = I_x \omega_N
+    \label{eq_theo_L1}
+  \end{align}
+  Bei schwach ausgeprägter Nutationsbewegung, bzw. kleinem $\vartheta$, kann man des Weiteren
+  \begin{align}
+    L \approx I_z \omega \approx I_z \omega_F
+  \end{align}
+  annähern, sodass mit (\ref{eq_theo_L1}) folgt
+  \begin{align}
+    \omega_N \approx \frac{I_z}{I_x} \omega_F
+    \label{eq_theo_nutation_omegaN_omegaF}
+  \end{align}
+
+  Als Nächstes soll die Größe $\Omega$, welche die Frequenz der Drehung der Winkelgeschwindigkeit $\vec{\omega}$ um die Figurenachse beschreibt, in einen mathematischen Zusammenhang gebracht werden.
+  Dies erfolgt durch eine recht aufwendige Rechnung mithilfe der Eulerschen Gleichungen, welche das folgende Ergebnis liefert
+  \begin{align}
+    \Omega = \frac{I_x - I_z}{I_x} \omega_F
+    \label{eq_theo_nutation_Omega_omegaF}
+  \end{align}
+
+  Zuletzt soll für den Fall der Präzession, also eine Rotation des Drehimpulsvektors aufgrund eines angreifenden Drehmoments, eine Beziehung zwischen der Frequenz $\omega_P$ dieser Präzession und der Frequenz $\omega_F$ hergeleitet werden.
+  Im betrachteten Fall liege außerdem keine zusätzliche Nutation vor, sodass Drehimpuls $\vec{L}$, Figurenachse $\vec{F}$ und Drehachse $\omega$ zusammenfallen.
+  Werde das Drehmoment also durch eine Masse $m$ induziert, die den Kreisel am Abstandsvektor $\vec{l}$ mit der Gewichtskraft $m \vec{g}$ angreift und
+  sei außerdem $\alpha$ der Winkel zwischen z-Achse und $\vec{l}$, dann ist die Präzessionsfrequenz gegeben als
+  \begin{align}
+    \omega_P = \frac{d\varphi}{dt}
+  \end{align}
+  Dabei ist $\varphi$ der momentane polare Drehwinkel von $\vec{L}$.
+  Da $\varphi$ der Winkel der Projektion von $\vec{L}$ auf die Ebene orthogonal zu $\vec{\omega_P}$ (also der Drehachse von $\vec{L}$) ist, gilt für den Anteil $\vec{L}_{\parallel}$ von $\vec{L}$ tangential zu dieser Ebene
+  \begin{align}
+    &\vec{L}_{\parallel} = L \sin(\alpha) \vec{e}_r \nonumber \\
+    \Rightarrow \ & d\vec{L}_{\parallel} = L \sin(\alpha) \vec{e}_\varphi d\varphi \nonumber \\
+    \Rightarrow \ & dL_{\parallel} = L \sin(\alpha) d\varphi
+  \end{align}
+  Wobei für einen beliebigen Vektor $\vec{v}$ hier immer gelten soll $dv = |d\vec{v}|$. Da außerdem für den Anteil $\vec{L}_\perp$ orthogonal zur besagten Ebene, $d\vec{L}_\perp = 0$ gilt, folgt
+  \begin{align}
+    \omega_P = \frac{d\varphi}{dt} = \frac{1}{L \sin(\alpha)} \frac{d L}{dt}
+  \end{align}
+  Mit $L = I_z \omega_F$ und $\frac{dL}{dt} = M = m | \vec{l} \times \vec{g} | = m \, l \, g \sin(\alpha)$, folgt daraus
+  \begin{align}
+    \omega_P = \frac{m \, g \, l}{I_z \omega_F}
+    \label{eq_theo_precession_omegaP_omegaF}
+  \end{align}
+
+  \section{Auswertung}
+  Der zur Auswertung verwendete Python Code kann unter der folgenden Url eingesehen werden:
+  \begin{center}
+    \href{https://github.com/jackerschott/AP21/tree/master/experiments/spinning_top}{https://github.com/jackerschott/AP21/tree/master/experiments/spinning\_top}
+  \end{center}
+  
+  \subsection{Qualitative Beobachtungen}
+  Im ersten Teil der qualitativen Versuche wurde die Reaktion des kräftefreien Kreisels bei einer Verschiebung der Figurenachse beobachtet.
+  Die Figurenachse hat sich als Ergebnis nach der Verschiebung zeitlich nicht mehr verändert, was auch zu erwarten war, da hier bei mangelnder Nutation $\vec{L}$, $\vec{F}$ und $\vec{\omega}$ zusammenfallen, sodass für eine zeitliche Änderung von $\vec{F}$ eine zeitliche Änderung von $\vec{L}$, also ein Drehmoment nötig wäre, was bei dem kräftefreien Kreisel nicht gegeben ist.
+
+  \subsection{Bestimmung der Dämpfungskonstante}
+  Es wird mit $\omega = 2 \pi f$, $\Delta \omega = 2 \pi \Delta f$ die Drehfrequenzen aus den Werten in Tabelle 1 (Messwerte) berechnet und eine Exponentialfunktion an die $\omega$-$t$-Werte angefittet (siehe Abbildung \ref{fig_damping_constant}).
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig1.pgf}
+    \caption{Bestimmung der Dämpfungkonstante $\delta$ der Drehfrequenz $\omega$ durch Fit der $\omega$-$t$-Abhängigkeit mit der Funktion $\omega_0 \, e^{-\delta t}$.}
+    \label{fig_damping_constant}
+  \end{figure}
+
+  Dabei erhält man eine Dämpfungskonstante $\delta$ und Halbwertszeit $T_{1/2}$ von
+  \begin{align}
+    \delta &= (55 \pm 5) \, \frac{1}{\text{d}} \nonumber \\
+    T_{1/2} &= (18.0 \pm 1.7) \, \text{min}
+  \end{align}
+
+  \subsection{Bestimmung des Hauptträgheitsmoments in z-Richtung}
+  Zuerst ist anzumerken, dass man bei Betrachtung der Werte für die Präzessionsdauer in Tabelle 2 (Messwerte) für verschiedene Winkel der Figurenachse, Abweichungen von $1.5\sigma$, $0.6\sigma$ und $0.8\sigma$ zwischen jeweils den ersten beiden Werten, dem ersten und dritten Wert sowie dem zweiten und dritten Wert erhält.
+  Dies sind alles keine signifikanten Abweichungen, sodass die Präzessionsdauer im Rahmen der Messungenauigkeiten nicht vom Winkel der Figurenachse abhängt.
+
+  Aus den Werten für $f$ in Tabelle 3 (Messwerte), wird analog zu oben der Wert $\omega_{F,i} = 2 \pi f$ am Anfang der Präzession berechnet. Den Wert am Ende dieser erhält man stattdessen durch
+  \begin{align}
+    \omega_{F,f} &= \omega_{F,i} e^{-\delta T_P} \nonumber \\
+    \Delta \omega_{F,f} &= \omega_{F,f}
+    \sqrt{\left(\frac{\Delta \omega_{F,i}}{\omega_{F,i}} \right)^2
+    + (T_P \Delta \delta)^2 + (\delta \Delta T_P)^2}
+  \end{align}
+  Wobei $\delta$ die zuvor bestimmte Dämpfungskonstante und $T_P$ der jeweilige Wert aus Tabelle 3 (Messwerte) ist.
+  Damit wird nach Gleichung (\ref{eq_theo_precession_omegaP_omegaF}) eine lineare Regression zwischen $T_P$ und dem Mittelwert $\omega_F$ aus $\omega_{F,i}$ und $\omega_{F,f}$ durchgeführt (siehe Abbildung \ref{fig_I_z}).
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig2.pgf}
+    \caption{Bestimmung des Hauptträgheitsmoments $I_z$ aus Gleichung (\ref{eq_theo_precession_omegaP_omegaF}) durch lineare Regression der Präzessionsdauer $T_P$ in Abhängigkeit von $\omega_F$. Dabei wird $\omega_F = 0 \Rightarrow T_P = 0$ angenommen.}
+    \label{fig_I_z}
+  \end{figure}
+
+  Für die Steigungen $s_i$, der $i$-ten Konfiguration der angreifenden Masse, erhält man
+  
+  \begin{center}
+    \begin{tabular}{c | c | c}
+      $m$ / g & $l$ / cm & $s_i$ / $s^2$ \\
+      \hline
+      9.850 & 15.00 & 0.679 ± 0.019 \\
+      9.850 & 20.00 & 0.585 ± 0.013 \\
+      19.70 & 15.00 & 0.417 ± 0.012 \\
+      19.70 & 20.00 & 0.328 ± 0.011 
+    \end{tabular}
+    \captionof{table}{Steigungen der Geraden in Abbildung \ref{fig_I_z}.}
+    \label{table_I_z_slopes}
+  \end{center}
+
+  Nach Gleichung (\ref{eq_theo_precession_omegaP_omegaF}) folgt nun
+  \begin{align}
+    I_z &= \frac{m \, g \, l}{2 \pi} s \nonumber \\
+    \Delta I_z &= I_z \frac{\Delta s}{s}
+  \end{align}
+  Wobei $s$ die jeweilige Steigung ist und die Fallbeschleunigung $g = (9.80984 \pm 0.00002) \, \frac{\text{m}}{\text{s}^2}$ in Heidelberg verwendet wurde (Fehler wird vernachlässigt, siehe Skript PAP 1). Man erhält die folgenden Werte für $I_z$
+
+  \begin{center}
+    \begin{tabular}{c | c | c}
+      $m$ / g & $l$ / cm & $I_z$ / $(\text{g} \, \text{cm}^2)$ \\
+      \hline
+      9.850 & 15.00 & 15.7 ± 0.4 \\
+      9.850 & 20.00 & 18.0 ± 0.4 \\
+      19.70 & 15.00 & 19.3 ± 0.5 \\
+      19.70 & 20.00 & 20.2 ± 0.7
+    \end{tabular}
+    \captionof{table}{Haupträgheitsmoment $I_z$ für die verschiedenen Kombinationen der angreifenden Masse $m$ und dem Abstand $l$ dieser vom Mittelpunkt der Kugel.}
+    \label{table_I_z}
+  \end{center}
+
+  beziehungsweise bekommt man den folgenden Mittelwert
+
+  \begin{align}
+    I_z = (18.28 \pm 0.26) \, \text{kg} \, \text{cm}^2
+  \end{align}
+
+  Wobei hier allerdings die Methodik hinterfragt werden kann, da die Werte für $I_z$ in Tabelle \ref{table_I_z} signifikant voneinander abweichen.
+  Damit ist es fragwürdig, ob man mit dem Mittelwert arbeiten sollte.
+
+  \subsection{Bestimmung des Hauptträgheitsmoment in x-Richtung}
+  Es wird $\omega_F = 2 \pi f$ (analog zu oben) und $\Omega = \frac{2 \pi}{t}$, $\Delta \Omega = \Omega \frac{\Delta t}{t}$ mithilfe der Werte aus Tabelle 4 (Messwerte) berechnet.
+  Damit wird eine lineare Regression durchgeführt, die in Abbildung \ref{fig_I_x_1} dargestellt ist.
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig3.pgf}
+    \caption{Bestimmung des Haupträgheitsmoments $I_x$ durch lineare Regression von $\omega_F$ in Abhängigkeit der Frequenz des Farbwechsels $\Omega$ unter Verwendung von Gleichung (\ref{eq_theo_nutation_Omega_omegaF})}
+    \label{fig_I_x_1}
+  \end{figure}
+
+  Als Steigung erhält man $s = (2.0 \pm 0.3) \cdot 10^4$, woraus mit Gleichung (\ref{eq_theo_nutation_Omega_omegaF}) folgt
+  \begin{align}
+    I_x - I_z &= \frac{I_z}{s - 1} \nonumber \\
+    \Delta(I_x - I_z) &= (I_x - I_z) \sqrt{\left(\frac{\Delta I_z}{I_z}\right)^2 + \left(\frac{\Delta s}{s - 1}\right)^2}
+  \end{align}
+  Damit erhält man $I_x - I_z = (55 \pm 10) \, \text{g} \, \text{cm}^2$, wobei der $I_z$-Wert von oben verwendet wurde. Weiter berechnet man
+  \begin{align}
+    I_x = (18.33 \pm 0.26) \, \text{kg} \, \text{cm}^2
+  \end{align}
+  Wobei $\Delta I_x = \sqrt{\Delta(I_x - I_z)^2 + \Delta I_z^2}$.
+
+  Des Weiteren kann $I_x$ auch mithilfe der Messwerte in Tabelle 5 über Gleichung (\ref{eq_theo_nutation_omegaN_omegaF}) gewonnen werden.
+  Dazu werden wieder $\omega_N = 2 \pi f_N$ und $\omega_F = 2 \pi f_F$ analog zu oben berechnet und abermals eine lineare Regression von $\omega_F$ in Abhängigkeit von $\omega_N$ durchgeführt (siehe Abbildung \ref{fig_I_x_2})
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig4.pgf}
+    \caption{Bestimmung von $I_x$ durch lineare Regression von $\omega_F$ in Abhängigkeit von $\omega_N$.}
+    \label{fig_I_x_2}
+  \end{figure}
+
+  Man erhält die Steigung $s = 1.088 \pm 0.019$. Damit folgt nach Gleichung (\ref{eq_theo_nutation_omegaN_omegaF})
+  \begin{align}
+    I_x &= I_z s \nonumber \\
+    \Delta I_x &= I_x \sqrt{\left(\frac{\Delta I_z}{I_z}\right)^2 + \left(\frac{\Delta s}{s}\right)^2}
+  \end{align}
+  Bzw. in Zahlen, wobei wieder $I_z$ von oben verwendet wird.
+  \begin{align}
+    I_x = (19.9 \pm 0.5) \, \text{kg} \, \text{cm}^2
+  \end{align}
+
+  \newpage
+  \section{Diskussion}
 
 \end{document}
