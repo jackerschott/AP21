@@ -16,11 +16,11 @@ output = __name__ == '__main__'
 f = np.array([
   600.0, 480.0, 410.0, 350.0, 445.0,
   375.0, 300.0, 530.0, 505.0, 570.0,
-])
+]) / cs.minute
 d_f = np.array([
   10.0, 10.0, 10.0, 10.0, 10.0,
   10.0, 10.0, 10.0, 10.0, 10.0
-])
+]) / cs.minute
 t = np.array([
   31.6, 35.9, 41.1, 50.7, 40.3,
   45.5, 54.6, 32.8, 35.1, 32.4
@@ -37,7 +37,14 @@ Omega = 2 * pi / t
 d_Omega = Omega * d_t / t
 
 ## Evaluation
+if output:
+  plt.subplots(num=3)
+  plt.xlabel(r'$\Omega$ / (1/s)')
+  plt.ylabel(r'$\omega_F$ / (1/s)')
+
 s, d_s, b, d_b = dpl.linreg(Omega, omega_F, d_omega_F, d_Omega)
+if output:
+  print(dpr.val(s, d_s, name='s'))
 if output:
   x_fit = dpl.x_fit_like(Omega)
   y_fit, y_u_fit = dpl.linreg_lines(x_fit, s, d_s, b, d_b)
@@ -50,12 +57,15 @@ if output:
 delta_I = I_z / (s - 1)
 d_delta_I = delta_I * sqrt((d_I_z / I_z)**2 + (d_s / (s - 1))**2)
 
+if output:
+  print(dpr.val(delta_I / (cs.gram * cs.centi**2), d_delta_I / (cs.gram * cs.centi**2), name='I_x - I_z', unit='g cm^2'))
+
 I_x = delta_I + I_z
 d_I_x = sqrt(d_delta_I**2 + d_I_z**2)
 
 if output:
-  print(dpr.val(I_x / (cs.gram * cs.centi**2), d_I_x / (cs.gram * cs.centi**2),
-    name='I_x', unit='g cm^2'))
+  print(dpr.val(I_x / cs.centi**2, d_I_x / cs.centi**2,
+    name='I_x', unit='kg cm^2'))
 
 if output:
   fig_folder_path = 'figures/spinning_top'

@@ -23,13 +23,13 @@ f_F = np.array([
   [675.0, 570.0, 370.0, 260.0],
   [680.0, 515.0, 415.0, 220.0],
   [640.0, 520.0, 370.0, 280.0]
-])
+]) / cs.minute
 d_f_F = np.array([
   [10.0, 10.0, 10.0, 10.0],
   [10.0, 10.0, 10.0, 10.0],
   [10.0, 10.0, 10.0, 10.0],
   [10.0, 10.0, 10.0, 10.0]
-])
+]) / cs.minute
 T_P = np.array([
   [45.4, 41.3, 29.2, 19.2],
   [41.1, 33.7, 23.9, 15.0],
@@ -55,9 +55,15 @@ d_omega_F = sqrt(d_omega_F1**2 + d_omega_F2**2)
 
 ## Evaluation
 if output:
-  plt.subplots()
-  plt.xlabel(r'$\omega_F$')
-  plt.ylabel(r'$T_P$')
+  print(dpr.tbl([
+    dpr.lst(m / cs.gram, name='m', unit='g'),
+    dpr.lst(l / cs.centi, name='l', unit='cm')
+  ]))
+
+if output:
+  plt.subplots(num=2)
+  plt.xlabel(r'$\omega_F / (1/s)$')
+  plt.ylabel(r'$T_P / s$')
 
 s, d_s = np.zeros(len(m)), np.zeros(len(m))
 b, d_b = np.zeros(len(m)), np.zeros(len(m))
@@ -76,10 +82,22 @@ if output:
     dataPts, *_ = plt.errorbar(omega_F[i], T_P[i], d_T_P[i], d_omega_F[i], fmt='o')
     plt.plot(x_fit, y_fit, color=dataPts.get_color(), label='Fit')
     plt.plot(x_fit, y_u_fit, color=dataPts.get_color(), label='Fit uncertainty', ls='dashed')
-    plt.legend()
+    # plt.legend()
+
+if output:
+  print(dpr.tbl([
+    dpr.lst(s, d_s, name='s', unit='s^2', prefix=False, exp_to_fix=0)
+  ]))
 
 I_z = m * g * l / (2 * pi) * s
 d_I_z = I_z * d_s / s
+
+if output:
+  print(dpr.tbl([
+    dpr.lst(I_z / (cs.centi**2), d_I_z  / (cs.centi**2),
+      name='I_z', unit='kg cm^2')
+  ]))
+
 I_z = np.mean(I_z)
 d_I_z = sqrt(np.sum(d_I_z**2)) / len(m)
 
@@ -99,5 +117,3 @@ if output:
   fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pgf')
   for fig_path in fig_paths:
     plt.savefig(fig_path, bbox_inches='tight', pad_inches=0.0)
-
-plt.show()
