@@ -25,7 +25,7 @@ d_r = 0.05 / 2 * cs.milli
 N = 50
 TL1 = 23.1 + cs.zero_Celsius
 TL2 = 23.3 + cs.zero_Celsius
-tL = 47.42 / N# 46.42 / N
+tL = 46.42 / N # 47.42 / N
 d_tL = 0.5 / N
 TAr1 = 23.4 + cs.zero_Celsius
 TAr2 = 23.5 + cs.zero_Celsius
@@ -43,12 +43,14 @@ d_TAr = 0.5 * (TAr2 - TAr1)
 pL = 0.5 * (pL2 + pL1)
 d_pL = 0.5 * (pL2 - pL1)
 kappa_rL = 4 * m * V / (r**4 * tL**2 * pL)
-# d_kappa_rL = 
+d_kappa_rL = kappa_rL * sqrt((d_m / m)**2 + (d_V / V)**2 + (4 * d_r / r)**2 + (2 * d_tL / tL)**2 + (d_pL / pL)**2)
 kappa_rAr = 4 * m * V / (r**4 * tAr**2 * pL)
-# d_kappa_rL = 
+d_kappa_rAr = kappa_rAr * sqrt((d_m / m)**2 + (d_V / V)**2 + (4 * d_r / r)**2 + (2 * d_tAr / tAr)**2 + (d_pL / pL)**2)
 
 print(dpr.tbl([
-  dpr.lst(kappa_cd, d_kappa_cd, name='ĸ')
+  dpr.lst(kappa_cd, d_kappa_cd, name='ĸ_cd'),
+  dpr.dev(kappa_cd, d_kappa_cd, kappa_rL, d_kappa_rL, name='κ_cd, κ_r')
 ]))
-print(dpr.val('ĸ', kappa_rL))
-print(dpr.val('ĸ', kappa_rAr))
+
+print(dpr.val(kappa_rL, d_kappa_rL, name='ĸ_rL'))
+print(dpr.val(kappa_rAr, d_kappa_rL, name='ĸ_rAr'))
