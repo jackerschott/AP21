@@ -38,7 +38,7 @@ d_omega_N = 2 * pi * d_f_N
 
 ## Evaluation
 if output:
-  plt.subplots(num=4)
+  plt.subplots(num=5)
   plt.xlabel(r'$\omega_N$ / (1/s)')
   plt.ylabel(r'$\omega_F$ / (1/s)')
 

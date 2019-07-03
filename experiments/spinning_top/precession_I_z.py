@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy import pi, sqrt, exp
-import scipy.constants as cs
 import os
+import scipy.constants as cs
+from scipy.optimize import curve_fit
 
 import datproc.plot as dp
 import datproc.print as dpr
@@ -98,12 +99,43 @@ if output:
       name='I_z', unit='kg cm^2')
   ]))
 
+def I_z_func(ml, I_z_t, delta_ml):
+  return I_z_t / (1 + delta_ml / ml)
+
+if output:
+  plt.subplots(num=3)
+  plt.xlabel(r'$m l$ / (g cm)')
+  plt.ylabel(r'$I_z$ / (kg cm$^2$)')
+
+ml = m * l
+
+popt, pcov = curve_fit(I_z_func, ml, I_z, p0=(0.0025, 0.0010))
+d_popt = sqrt(np.diag(pcov))
+
+if output:
+  x_fit = dp.x_fit_like(ml)
+  y_fit = I_z_func(x_fit, *popt)
+
+  dataPts, *_ = plt.errorbar(ml / (cs.gram * cs.centi), I_z / cs.centi**2, d_I_z / cs.centi**2, fmt='o')
+  plt.plot(x_fit / (cs.gram * cs.centi), y_fit / cs.centi**2, color=dataPts.get_color())
+
+if output:
+  print(dpr.val(popt[0] / cs.centi**2, d_popt[0] / cs.centi**2,
+    name='I_z_t', unit='kg cm^2'))
+  print(dpr.val(popt[1] / (cs.gram * cs.centi), d_popt[1] / (cs.gram * cs.centi),
+    name='μ', unit='g cm'))
+
 I_z = np.mean(I_z)
 d_I_z = sqrt(np.sum(d_I_z**2)) / len(m)
+
+I_z_ = popt[0]
+d_I_z_ = d_popt[0]
 
 if output:
   print(dpr.val(I_z / (cs.gram * cs.centi**2), d_I_z / (cs.gram * cs.centi**2),
     name='I_z', unit='g cm^2'))
+  print(dpr.val(I_z_ / (cs.gram * cs.centi**2), d_I_z_ / (cs.gram * cs.centi**2),
+    name='I_z_', unit='g cm^2'))
 
 if output:
   fig_folder_path = 'figures/spinning_top'
@@ -111,9 +143,9 @@ if output:
     os.makedirs(fig_folder_path)
 
   fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pdf')
-  for fig_path in fig_paths:
-    plt.savefig(fig_path, bbox_inches='tight', pad_inches=0.6)
+  for fig_path, i in zip(fig_paths, plt.get_fignums()):
+    plt.figure(i).savefig(fig_path, bbox_inches='tight', pad_inches=0.6)
 
   fig_paths = dp.get_fig_paths(fig_folder_path, plt.get_fignums(), format='pgf')
-  for fig_path in fig_paths:
-    plt.savefig(fig_path, bbox_inches='tight', pad_inches=0.0)
+  for fig_path, i in zip(fig_paths, plt.get_fignums()):
+    plt.figure(i).savefig(fig_path, bbox_inches='tight', pad_inches=0.0)

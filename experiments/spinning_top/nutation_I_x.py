@@ -24,11 +24,11 @@ d_f = np.array([
 t = np.array([
   31.6, 35.9, 41.1, 50.7, 40.3,
   45.5, 54.6, 32.8, 35.1, 32.4
-])
+]) / 10
 d_t = np.array([
   2.0, 2.0, 2.0, 2.0, 2.0,
   2.0, 2.0, 2.0, 2.0, 2.0
-])
+]) / 10
 
 ## Data processing
 omega_F = 2 * pi * f
@@ -38,7 +38,7 @@ d_Omega = Omega * d_t / t
 
 ## Evaluation
 if output:
-  plt.subplots(num=3)
+  plt.subplots(num=4)
   plt.xlabel(r'$\Omega$ / (1/s)')
   plt.ylabel(r'$\omega_F$ / (1/s)')
 
