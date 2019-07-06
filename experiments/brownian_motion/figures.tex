@@ -1,0 +1,38 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgf}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+\pagestyle{empty}
+
+\begin{document}
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/brownian_motion/fig1.pgf}
+    \caption{Positionen $(x, y)$ eines Latex-Partikels in Wasser in chronologischer Reihenfolge und im Abstand von jeweils einer Sekunde.}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/brownian_motion/fig2.pgf}
+    \caption{Relative Häufigkeiten der räumliche Verschiebungen $\Delta s$ eines Partikels in einer beliebigen Raumrichtung sowie die entsprechende Gaußverteilung dieses Histogramms.}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/brownian_motion/fig3.pgf}
+    \caption[short]{Abhängigkeit der gesamten kummulativen quadratischen Verschiebung $r^2$ von der Zeit und lineare Regression des Graphen.}
+  \end{figure}
+\end{document}
