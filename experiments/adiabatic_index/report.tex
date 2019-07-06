@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{caption}
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage[hidelinks]{hyperref}
 
 \setlength\parindent{0pt}
 \numberwithin{equation}{section}
@@ -91,7 +92,7 @@
     \Leftrightarrow \ &\frac{\Delta V}{V_1} = \frac{\Delta p_1 - \Delta p_3}{b}
     \label{eq_boyle_mariott_converted}
   \end{align}
-  Einsetzen von (\ref{eq_boyle_mariott_converted}) in (\ref{eq_poisson_converted}) ergibt schlussendlich
+  Einsetzen von (\ref{eq_boyle_mariott_converted}) in (\ref{eq_theo_poisson_converted}) ergibt schlussendlich
   \begin{align}
     \kappa = \frac{\Delta p_1}{\Delta p_1 - \Delta p_3}
     \label{eq_theo_kappa_clement_desormes}
@@ -133,6 +134,68 @@
   
   \newpage
   \section{Auswertung}
-  
+  \subsection{Bestimmung des Adiabatenkoeffizienten nach Clément und Desormes}
+  $\Delta p_1$ und $\Delta p_2$ sind jeweils proportional zur entsprechenden Höhendifferenz $h_1$ und $h_2$ im Manometer.
+  Damit erhält man aus (\ref{eq_theo_kappa_clement_desormes}) die folgende Formel für $\kappa$
+  \begin{align}
+    \kappa &= \frac{h_1}{h_1 - h_3} \nonumber \\
+    \Delta\kappa &= \kappa \sqrt{\left(\frac{\Delta h_1}{h_1}\right)^2 + \frac{\Delta h_1^2 + \Delta h_3^2}{(h_1 - h_3)^2}}
+  \end{align}
+  bzw. die Zahlenwerte
+
+  \begin{center}
+    \begin{tabular}{c}
+      $\kappa$ \\
+      \hline
+      1.212 ± 0.027 \\
+      1.22 ± 0.16 \\
+      1.280 ± 0.027 \\
+      1.30 ± 0.13 \\
+      1.267 ± 0.027
+    \end{tabular}
+  \end{center}
+
+  und letztendlich den Mittelwert
+  \begin{align}
+    \kappa = 1.26 \pm 0.04
+  \end{align}
+
+  \subsection{Bestimmung des Adiabatenkoeffizienten nach Rüchardt}
+  Aus den gemessenen Zeiten $t$ für jeweils 50 Schwingungen, wird die Periodendauer $T$ gemäß $T = t / 50$, $\Delta T = \Delta t / 50$ bestimmt.
+  Man erhält $T_L = (0.928 \pm 0.010) \, \text{s}$ für Luft und $T_\text{Ar} = (0.926 \pm 0.010) \, \text{s}$ für Argon.
+  Des Weiteren werden die beiden Luftdrücke $p_1, p_2$ vor und nach der Messung gemittelt um einen durchschnittlichen Luftdruck $p$ während der Messung zu erhalten, mit Fehler $\Delta p = |p_2 - p_1| / 2$.
+  In Zahlen ergibt dies $p = (99.945 \pm 0.005) \, \text{kPa}$.
+  Damit und mit den den Werte für $m$, $r$ und $V$, kann nun gemäß (\ref{eq_theo_kappa_ruechardt}) der Adiabatenkoeffizient berechnet werden
+  \begin{align}
+    \kappa &= \frac{4 \, m \, V}{r^4 \, T^2 \, p} \nonumber \\
+    \Delta\kappa &= \kappa \sqrt{
+      \left(\frac{\Delta m}{m}\right)^2
+    + \left(\frac{\Delta V}{V}\right)^2
+    + \left(4 \frac{\Delta r}{r}\right)^2
+    + \left(2 \frac{\Delta T}{T}\right)^2
+    + \left(\frac{\Delta p}{p}\right)^2}
+  \end{align}
+  Dies ergibt die Werte $\kappa_L$ für Luft und $\kappa_\text{Ar}$ für Argon
+  \begin{align}
+    \kappa_L = 1.62 \pm 0.04 \nonumber \\
+    \kappa_\text{Ar} = 1.63 \pm 0.04
+  \end{align}
+
+  \newpage
+  \section{Diskussion}
+  In diesem Versuch wurde der Adiabatenkoeffizient von Luft mit Methoden nach Clemént-Desormes und nach Rüchardt bestimmt, während der Adiabatenkoeffizient von Argon ebenfalls mit Letzterer bestimmt wurde.
+
+  Dabei erhielt man folgende Werte nach Clemént-Desormes
+  \begin{align}
+    \kappa_{\text{cd},L} = 1.26 \pm 0.04
+  \end{align}
+  und nach Rüchardt
+  \begin{align}
+    \kappa_{r,L} = 1.62 \pm 0.04 \nonumber \\
+    \kappa_{r,\text{Ar}} = 1.63 \pm 0.04
+  \end{align}
+  Die Literaturwerte $\kappa_L$ für Luft und $\kappa_\text{Ar}$ für Argon betragen $\kappa_L = 1.40$ und $\kappa_\text{Ar} = 1.67$.
+  Damit erhält man nun signifikante Abweichungen von $\kappa_{\text{cd},L}$ und $\kappa_{r,L}$ zu dem Literaturwert von $3.5\sigma$ und $5\sigma$ und untereinander von $6\sigma$.
+  Dagegen erhält man eine nicht signifikante Abweichung von $1.0\sigma$ zwischen $\kappa_{r,\text{Ar}}$ und $\kappa_{\text{Ar}}$.
 
 \end{document}
