@@ -1,0 +1,80 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgf}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+
+\begin{document}
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig1.pgf}
+    \caption{Bestimmung der Dämpfungkonstante $\delta$ der Drehfrequenz $\omega$ durch Fit der $\omega$-$t$-Abhängigkeit mit der Funktion $\omega_0 \, e^{-\delta t}$.}
+    \label{fig_damping_constant}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig2.pgf}
+    \caption{Bestimmung des Hauptträgheitsmoments $I_z$ aus Gleichung (1.10) durch lineare Regression der Präzessionsdauer $T_P$ in Abhängigkeit von $\omega_F$. Dabei wird $\omega_F = 0 \Rightarrow T_P = 0$ angenommen.}
+    \label{fig_I_z}
+  \end{figure}
+
+  \begin{center}
+    \begin{tabular}{c | c | c}
+      $m$ / g & $l$ / cm & $s_i$ / $s^2$ \\
+      \hline
+      9.850 & 15.00 & 0.679 ± 0.019 \\
+      9.850 & 20.00 & 0.585 ± 0.013 \\
+      19.70 & 15.00 & 0.417 ± 0.012 \\
+      19.70 & 20.00 & 0.328 ± 0.011 
+    \end{tabular}
+    \captionof{table}{Steigungen der Geraden in Abbildung 2.}
+    \label{table_I_z_slopes}
+  \end{center}
+
+  \begin{center}
+    \begin{tabular}{c | c | c}
+      $m$ / g & $l$ / cm & $I_z$ / $(\text{g} \, \text{cm}^2)$ \\
+      \hline
+      9.850 & 15.00 & 15.7 ± 0.4 \\
+      9.850 & 20.00 & 18.0 ± 0.4 \\
+      19.70 & 15.00 & 19.3 ± 0.5 \\
+      19.70 & 20.00 & 20.2 ± 0.7
+    \end{tabular}
+    \captionof{table}{Haupträgheitsmoment $I_z$ für die verschiedenen Kombinationen der angreifenden Masse $m$ und dem Abstand $l$ dieser vom Mittelpunkt der Kugel.}
+    \label{table_I_z}
+  \end{center}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig3.pgf}
+    \caption{Fit des Graphen von (2.5) an die zuvor ermittelten Werte von $I_z$ und $m l$.}
+    \label{fig_I_z_correction}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig4.pgf}
+    \caption{Bestimmung des Haupträgheitsmoments $I_x$ durch lineare Regression von $\omega_F$ in Abhängigkeit der Frequenz des Farbwechsels $\Omega$ unter Verwendung von Gleichung (1.6)}
+    \label{fig_I_x_1}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/spinning_top/fig5.pgf}
+    \caption{Bestimmung von $I_x$ durch lineare Regression von $\omega_F$ in Abhängigkeit von $\omega_N$.}
+    \label{fig_I_x_2}
+  \end{figure}
+\end{document}

@@ -90,12 +90,12 @@ if output:
     dpr.lst(s, d_s, name='s', unit='s^2', prefix=False, exp_to_fix=0)
   ]))
 
-I_z = m * g * l / (2 * pi) * s
-d_I_z = I_z * d_s / s
+I_z_ = m * g * l / (2 * pi) * s
+d_I_z_ = I_z_ * d_s / s
 
 if output:
   print(dpr.tbl([
-    dpr.lst(I_z / (cs.centi**2), d_I_z  / (cs.centi**2),
+    dpr.lst(I_z_ / (cs.centi**2), d_I_z_  / (cs.centi**2),
       name='I_z', unit='kg cm^2')
   ]))
 
@@ -109,14 +109,14 @@ if output:
 
 ml = m * l
 
-popt, pcov = curve_fit(I_z_func, ml, I_z, p0=(0.0025, 0.0010))
+popt, pcov = curve_fit(I_z_func, ml, I_z_, p0=(0.0025, 0.0010))
 d_popt = sqrt(np.diag(pcov))
 
 if output:
   x_fit = dp.x_fit_like(ml)
   y_fit = I_z_func(x_fit, *popt)
 
-  dataPts, *_ = plt.errorbar(ml / (cs.gram * cs.centi), I_z / cs.centi**2, d_I_z / cs.centi**2, fmt='o')
+  dataPts, *_ = plt.errorbar(ml / (cs.gram * cs.centi), I_z_ / cs.centi**2, d_I_z_ / cs.centi**2, fmt='o')
   plt.plot(x_fit / (cs.gram * cs.centi), y_fit / cs.centi**2, color=dataPts.get_color())
 
 if output:
@@ -125,14 +125,14 @@ if output:
   print(dpr.val(popt[1] / (cs.gram * cs.centi), d_popt[1] / (cs.gram * cs.centi),
     name='μ', unit='g cm'))
 
-I_z = np.mean(I_z)
-d_I_z = sqrt(np.sum(d_I_z**2)) / len(m)
+I_z_ = np.mean(I_z_)
+d_I_z_ = sqrt(np.sum(d_I_z_**2)) / len(m)
 
 I_z_ = popt[0]
 d_I_z_ = d_popt[0]
 
 if output:
-  print(dpr.val(I_z / (cs.gram * cs.centi**2), d_I_z / (cs.gram * cs.centi**2),
+  print(dpr.val(I_z_ / (cs.gram * cs.centi**2), d_I_z_ / (cs.gram * cs.centi**2),
     name='I_z', unit='g cm^2'))
   print(dpr.val(I_z_ / (cs.gram * cs.centi**2), d_I_z_ / (cs.gram * cs.centi**2),
     name='I_z_', unit='g cm^2'))

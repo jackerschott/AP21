@@ -7,7 +7,7 @@ import scipy.constants as cs
 import datproc.plot as dpl
 import datproc.print as dpr
 
-from precession_I_z import I_z, d_I_z
+from precession_I_z import I_z_, d_I_z_
 
 ## General
 output = __name__ == '__main__'
@@ -54,14 +54,14 @@ if output:
   plt.plot(x_fit, y_u_fit, color=dataPts.get_color(), label='Fit uncertainty', ls='dashed')
   plt.legend()
 
-delta_I = I_z / (s - 1)
-d_delta_I = delta_I * sqrt((d_I_z / I_z)**2 + (d_s / (s - 1))**2)
+delta_I = I_z_ / (s - 1)
+d_delta_I = delta_I * sqrt((d_I_z_ / I_z_)**2 + (d_s / (s - 1))**2)
 
 if output:
   print(dpr.val(delta_I / (cs.gram * cs.centi**2), d_delta_I / (cs.gram * cs.centi**2), name='I_x - I_z', unit='g cm^2'))
 
-I_x = delta_I + I_z
-d_I_x = sqrt(d_delta_I**2 + d_I_z**2)
+I_x = delta_I + I_z_
+d_I_x = sqrt(d_delta_I**2 + d_I_z_**2)
 
 if output:
   print(dpr.val(I_x / cs.centi**2, d_I_x / cs.centi**2,
