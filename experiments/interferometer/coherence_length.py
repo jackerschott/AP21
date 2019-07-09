@@ -27,7 +27,7 @@ U = data[:,4]
 ## Evaluation
 t_range = [-0.035, 0.065]
 if output:
-  plt.subplots(num=4)
+  plt.subplots(num=2)
   plt.xlabel(r'$t$ / s')
   plt.ylabel(r'$U$ / V')
   plt.xlim(*t_range)
@@ -53,15 +53,11 @@ if output:
 delta_s = v_mov * popt[2]
 d_delta_s = v_mov * d_popt[2]
 
-delta_lda = lda**2 / (2 * pi * delta_s)
-d_delta_lda = delta_lda * sqrt((2 * d_lda / lda)**2 + (d_delta_s / delta_s)**2)
-
 if output:
   print(dpr.val(delta_s, d_delta_s, name='Δs', unit='m'))
-  print(dpr.val(delta_lda, d_delta_lda, name='Δλ', unit='m'))
 
-L = lda**2 / delta_lda
-d_L = L * sqrt((2 * d_lda / lda)**2 + (d_delta_lda / delta_lda)**2)
+L = 2 * pi * delta_s
+d_L = L * d_delta_s / delta_s
 
 if output:
   print(dpr.val(L, d_L, name='L', unit='m'))
