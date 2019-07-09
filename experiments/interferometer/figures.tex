@@ -1,0 +1,32 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgf}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+
+\begin{document}
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/interferometer/fig1.pgf}
+    \caption{Bestimmung der Steigungen der linearen Zusammenhänge zwischen $p$ und $m$ durch lineare Regression für alle drei Messreihen.
+    Dabei wurde jeweils der erste Wert nicht berücksichtigt, da dieser optisch klar systematisch vom Zusammenhang der anderen Messwerte abweicht.}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/interferometer/fig2.pgf}
+    \caption{Interferogramm der vermessenen Leuchtdiode (LED) und Bestimmung der Breite der Einhüllenden durch Gaußfit der Wellenpeaks.}
+  \end{figure}
+\end{document}
