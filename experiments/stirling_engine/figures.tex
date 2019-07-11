@@ -1,0 +1,26 @@
+% !TEX program = lualatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape -output-directory=%OUTDIR% "%DOC%"
+
+\documentclass[12pt,a4paper,german]{scrartcl}
+\usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgf}
+
+\setlength\parindent{0pt}
+\numberwithin{equation}{section}
+\pagestyle{empty}
+
+\begin{document}
+  \begin{figure}[H]
+    \centering
+    \input{../../figures/stirling_engine/fig1.pgf}
+    \caption{}
+  \end{figure}
+\end{document}
