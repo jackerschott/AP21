@@ -37,7 +37,7 @@ d_tAr = 0.5 / N
 
 # Evaluation
 kappa_cd = h1 / (h1 - h3)
-d_kappa_cd = kappa_cd * sqrt((d_h1**2 + d_h3**2) / (h1 - h3)**2 + (d_h1 / h1)**2)
+d_kappa_cd = kappa_cd * sqrt((1 / h1 - 1 / (h1 - h3))**2 * d_h1**2 + d_h3**2 / (h1 - h3)**2)
 
 print(dpr.val(tL, d_tL, name='TL', unit='s', prefix=False, exp_to_fix=0))
 print(dpr.val(tAr, d_tAr, name='TAr', unit='s', prefix=False, exp_to_fix=0))
