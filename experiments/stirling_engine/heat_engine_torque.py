@@ -67,6 +67,15 @@ eta_eff = W_D / Q_el
 d_eta_eff = eta_eff * sqrt((d_W_D / W_D)**2 + (d_Q_el / Q_el)**2)
 
 if output:
+  print(dpr.tbl([
+    dpr.lst(F, d_F, name='F', unit='N'),
+    dpr.lst(f, d_f, name='f', unit='Hz'),
+    dpr.lst(Q_el, d_Q_el, name='Q_el', unit='J'),
+    dpr.lst(W_pV, d_W_pV, name='W_pV', unit='J'),
+    dpr.lst(W_D, d_W_D, name='W_D', unit='J')
+  ]))
+
+if output:
   plt.subplots(num=1)
   plt.xlabel(r'$f$ / Hz')
   plt.ylabel(r'$\eta_\textnormal{th}$, $\eta_\textnormal{eff}$')
@@ -80,4 +89,4 @@ if output:
   for i in plt.get_fignums():
     plt.figure(i).savefig(os.path.join(fig_folder_path, 'fig%i.pgf' % i), bbox_inches='tight', pad_inches=0.0)
     plt.figure(i).savefig(os.path.join(fig_folder_path, 'fig%i.pdf' % i))
-  plt.show()
+  plt.show()J

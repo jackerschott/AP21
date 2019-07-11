@@ -10,8 +10,8 @@ from cooling_unit import c_W, rho_W
 output = __name__ == '__main__'
 
 ## Data
-I = 2.590
-d_I = 0.010
+I = 2.590 * 5
+d_I = 0.010 * 5
 
 U = 11.78
 d_U = 0.03
@@ -40,7 +40,6 @@ d_A = np.std(A) / sqrt(len(A))
 A = np.mean(A)
 
 ## Evaluation
-# f, P_el, Q_el, P_out, Q_out, P_pV, W_pV, eta_th
 
 Q_el = I * U / f
 d_Q_el = Q_el * sqrt((d_I / I)**2 + (d_U / U)**2 + (d_f / f)**2)

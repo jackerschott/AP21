@@ -6,6 +6,8 @@ import datproc.print as dpr
 
 from cooling_unit import c_W, rho_W, UM, d_UM, IM, d_IM, eta, d_eta
 
+from cooling_unit import f
+
 ## General
 output = __name__ == '__main__'
 
@@ -29,7 +31,7 @@ WM = UM * IM * delta_t
 d_WM = Q2 * sqrt((d_UM / UM)**2 + (d_IM / IM)**2 + (d_delta_t / delta_t)**2)
 
 eta_ = Q2 / WM
-d_eta_ = eta * d_WM / WM
+d_eta_ = eta_ * d_WM / WM
 
 if output:
   print(dpr.val(delta_t, d_delta_t, name='Δt', unit='s'))
